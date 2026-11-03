@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#300914">
+<title>For Someone Special ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+ background:#300914;
+ color:#f4e4c1;
+ font-family:'Montserrat',sans-serif;
+ overflow-x:hidden;
+}
+:root{--gold:#d6b46a;--cream:#f4e4c1;--maroon:#300914}
+button{cursor:pointer;font-family:inherit}
+#opening{
+ min-height:100svh;
+ display:flex;align-items:center;justify-content:center;
+ text-align:center;padding:25px;
+ background:radial-gradient(ellipse,#641d32,#300914 75%);
+}
+.frame{
+ border:1px solid var(--gold);
+ outline:1px solid #d6b46a55;
+ outline-offset:8px;
+ padding:45px 24px;
+ width:min(100%,430px);
+}
+.small{letter-spacing:5px;font-size:10px;color:var(--gold)}
+.script{font-family:'Great Vibes',cursive;color:var(--gold)}
+h1{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:400;margin:22px 0}
+.envelope{
+ font-size:65px;margin:25px 0;
+ animation:float 2.5s ease-in-out infinite;
+}
+@keyframes float{50%{transform:translateY(-10px)}}
+.gold-btn{
+ background:var(--gold);color:#32101b;border:0;
+ padding:14px 30px;letter-spacing:2px;
+ font-size:11px;margin-top:25px;
+ transition:.3s;
+}
+.gold-btn:hover{transform:scale(1.05)}
+#main{display:none}
+section{
+ padding:90px 22px;text-align:center;
+ position:relative;
+}
+.hero{
+ min-height:90svh;display:flex;flex-direction:column;
+ justify-content:center;align-items:center;
+ background:linear-gradient(#300914cc,#300914ee),url('photo1.jpg') center/cover;
+}
+.hero h2{font-size:clamp(48px,12vw,76px);line-height:1.1;margin:25px 0}
+.hero p{font-size:12px;letter-spacing:3px}
+.line{width:65px;height:1px;background:var(--gold);margin:25px auto}
+.section-title{
+ font-family:'Cormorant Garamond',serif;
+ font-size:38px;font-weight:400;color:var(--gold);
+ margin-bottom:20px;
+}
+.message{
+ max-width:570px;margin:auto;
+ font-family:'Cormorant Garamond',serif;
+ font-size:21px;line-height:1.9;color:var(--cream);
+}
+.heart{color:var(--gold);font-size:25px;margin:20px}
+.gallery{
+ display:grid;grid-template-columns:1fr 1fr;
+ gap:12px;max-width:550px;margin:35px auto;
+}
+.gallery img{
+ width:100%;height:210px;object-fit:cover;
+ border:1px solid var(--gold);padding:4px;
+}
+.gallery img:first-child{grid-column:span 2;height:270px}
+.final{
+ background:radial-gradient(ellipse,#641d32,#300914 75%);
+ min-height:75svh;
+ display:flex;flex-direction:column;justify-content:center;
+}
+.footer{font-size:10px;letter-spacing:3px;color:var(--gold)}
+#music{
+ position:fixed;right:18px;bottom:18px;
+ background:var(--gold);color:#300914;
+ border:0;border-radius:50%;width:45px;height:45px;
+ font-size:19px;z-index:10;
+}
+.hidden{display:none}
+.fade{animation:appear 1.5s ease both}
+@keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
+</style>
+</head>
+
+<body>
+
+<div id="opening">
+ <div class="frame">
+  <div class="small">A SPECIAL INVITATION</div>
+  <div class="envelope">✉</div>
+  <p class="script" style="font-size:35px">For My Love</p>
+  <h1>A Special Day</h1>
+  <div class="line"></div>
+  <p style="font-size:11px;line-height:2">
+   Ada sesuatu yang ingin aku berikan<br>
+   khusus untuk seseorang yang istimewa.
+  </p>
+  <button class="gold-btn" onclick="openGift()">BUKA KEJUTAN ♡</button>
+ </div>
+</div>
+
+<div id="main">
+ <section class="hero">
+  <p class="small">TODAY IS ALL ABOUT YOU</p>
+  <h2 class="script">Happy Birthday</h2>
+  <h1 id="personName" style="font-size:48px">My Love</h1>
+  <div class="line"></div>
+  <p>ANOTHER BEAUTIFUL CHAPTER BEGINS</p>
+  <div class="heart">✧ ♡ ✧</div>
+ </section>
+
+ <section>
+  <p class="small">A LETTER FROM MY HEART</p>
+  <h2 class="section-title">Untuk Kamu</h2>
+  <div class="line"></div>
+  <div class="message">
+   Selamat ulang tahun, sayangku. ❤️
+   <br><br>
+   Hari ini adalah hari istimewa karena seseorang
+   yang begitu berarti dalam hidupku dilahirkan.
+   <br><br>
+   Terima kasih sudah hadir, sudah menjadi bagian
+   dari cerita hidupku, dan sudah memberikan
+   begitu banyak alasan untuk tersenyum.
+   <br><br>
+   Aku berharap setiap langkahmu dipenuhi
+   kebahagiaan, kesehatan, cinta, dan semua
+   hal indah yang selama ini kamu impikan.
+   <br><br>
+   Semoga aku masih bisa menjadi bagian
+   dari banyak cerita indahmu berikutnya.
+   <br><br>
+   <span class="script" style="font-size:38px;color:#d6b46a">
+    With all my love ♡
+   </span>
+  </div>
+ </section>
+
+ <section>
+  <p class="small">OUR LITTLE UNIVERSE</p>
+  <h2 class="section-title">Beautiful Memories</h2>
+  <div class="line"></div>
+  <p style="font-size:12px;line-height:2">
+   Beberapa kenangan yang selalu ingin aku simpan.
+  </p>
+  <div class="gallery">
+   <img src="photo1.jpg" alt="Kenangan 1">
+   <img src="photo2.jpg" alt="Kenangan 2">
+   <img src="photo3.jpg" alt="Kenangan 3">
+  </div>
+ </section>
+
+ <section class="final">
+  <p class="small">ONE LAST THING</p>
+  <h2 class="script" style="font-size:55px;margin:25px 0">
+   I Love You
+  </h2>
+  <div class="line"></div>
+  <div class="message">
+   Dunia mungkin begitu luas,
+   tetapi aku selalu bersyukur
+   karena di antara banyak kemungkinan,
+   aku bisa mengenalmu.
+   <br><br>
+   Happy Birthday, my favorite person. ❤️
+  </div>
+  <div class="heart">✦ ♡ ✦</div>
+  <p class="footer">MADE WITH LOVE, JUST FOR YOU</p>
+ </section>
+</div>
+
+<audio id="bgMusic" loop>
+ <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button id="music" class="hidden" onclick="toggleMusic()">♫</button>
+<canvas id="confetti"></canvas>
+
+<script>
+const audio=document.getElementById('bgMusic');
+let playing=false;
+
+function openGift(){
+ document.getElementById('opening').style.display='none';
+ document.getElementById('main').style.display='block';
+ document.getElementById('main').classList.add('fade');
+ document.getElementById('music').classList.remove('hidden');
+ audio.play().then(()=>playing=true).catch(()=>{});
+ window.scrollTo(0,0);
+ confetti();
+}
+
+function toggleMusic(){
+ if(playing){
+  audio.pause();
+  playing=false;
+  document.getElementById('music').textContent='♫';
+ }else{
+  audio.play().then(()=>{
+   playing=true;
+   document.getElementById('music').textContent='Ⅱ';
+  }).catch(()=>{});
+ }
+}
+
+function confetti(){
+ const canvas=document.getElementById('confetti');
+ const ctx=canvas.getContext('2d');
+ canvas.width=window.innerWidth;
+ canvas.height=window.innerHeight;
+ let pieces=Array.from({length:100},()=>({
+  x:Math.random()*canvas.width,
+  y:-Math.random()*canvas.height,
+  s:Math.random()*5+3,
+  v:Math.random()*3+2,
+  a:Math.random()*6
+ }));
+ let frame=0;
+ function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pieces.forEach(p=>{
+   p.y+=p.v;
+   p.x+=Math.sin(p.a+frame/20);
+   ctx.fillStyle=['#d6b46a','#f4e4c1','#a84b62'][Math.floor(p.s)%3];
+   ctx.fillRect(p.x,p.y,p.s,p.s);
+  });
+  frame++;
+  if(frame<180)requestAnimationFrame(draw);
+  else ctx.clearRect(0,0,canvas.width,canvas.height);
+ }
+ draw();
+}
+</script>
+</body>
+</html>
