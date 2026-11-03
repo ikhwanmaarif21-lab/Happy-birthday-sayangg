@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#300914">
+<title>A Secret For You</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100svh;
+ display:flex;align-items:center;justify-content:center;
+ padding:22px;text-align:center;
+ color:#f4e4c1;background:
+ radial-gradient(ellipse at center,#681d32,#300914 75%);
+ font-family:Georgia,serif
+}
+.card{
+ width:100%;max-width:400px;
+ padding:48px 25px;border:1px solid #c9a65b;
+ outline:1px solid #c9a65b55;outline-offset:7px
+}
+.gold{color:#d6b46a}
+.small{font:10px Arial;letter-spacing:4px}
+h1{font-size:38px;font-weight:normal;margin:24px 0}
+.script{font-style:italic;color:#d6b46a}
+p{font:12px/2 Arial;color:#ead9bd}
+input{
+ width:100%;padding:15px;margin-top:18px;
+ background:#451321;border:1px solid #c9a65b;
+ color:white;text-align:center;font-size:16px;
+ outline:none
+}
+button{
+ width:100%;padding:15px;margin-top:17px;
+ background:#d6b46a;color:#300914;
+ border:0;letter-spacing:2px;font-weight:bold
+}
+#error{color:#ff9da7;min-height:20px}
+</style>
+</head>
+<body>
+<div class="card">
+ <div class="small gold">A PRIVATE INVITATION</div>
+ <div style="font-size:55px;margin:25px">♛</div>
+ <div class="script" style="font-size:28px">For My Love</div>
+ <h1>Welcome, My Love</h1>
+ <p> Ada kejutan kecil yang sudah aku siapkan<br>
+ khusus untukmu. </p>
+ <p class="gold">Masukkan password untuk membuka hadiahmu</p>
+
+ <form id="login">
+  <input id="password" type="password"
+   placeholder="Enter your password"
+   autocomplete="current-password" required>
+  <button type="submit">UNLOCK MY SURPRISE ♡</button>
+ </form>
+
+ <p id="error"></p>
+ <p class="small gold">MADE WITH LOVE</p>
+</div>
+
+<script>
+document.getElementById("login").addEventListener("submit",
+ async function(e){
+  e.preventDefault();
+  const button=this.querySelector("button");
+  const error=document.getElementById("error");
+  button.disabled=true;
+  button.textContent="CHECKING...";
+  error.textContent="";
+
+  try{
+   const response=await fetch("/api/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+     password:document.getElementById("password").value
+    })
+   });
+   const result=await response.json();
+
+   if(response.ok && result.success){
+    window.location.href="/surprise.html";
+   }else{
+    error.textContent="Password salah. Coba lagi ya ❤️";
+   }
+  }catch(err){
+   error.textContent="Koneksi bermasalah. Coba lagi.";
+  }
+
+  button.disabled=false;
+  button.textContent="UNLOCK MY SURPRISE ♡";
+ });
+</script>
+</body>
+</html>
