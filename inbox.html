@@ -3,242 +3,75 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Private Inbox 💌</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#300914">
+<title>Message Inbox ❤️</title>
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;
-  min-height:100vh;
-  padding:25px 16px;
-  font-family:Georgia,serif;
-  background:linear-gradient(145deg,#fff5f7,#fce4ec,#fff0f4);
-  color:#75475b;
-}
-.container{
-  max-width:650px;
-  margin:35px auto;
-}
-h1{
-  text-align:center;
-  color:#c66d91;
-  font-size:32px;
-  font-weight:normal;
-}
-.subtitle{
-  text-align:center;
-  color:#b58a9d;
-  font-size:13px;
-  line-height:1.8;
-  margin-bottom:28px;
-}
-.panel{
-  background:rgba(255,255,255,.9);
-  padding:25px;
-  border:1px solid #f4d5df;
-  border-radius:22px;
-  box-shadow:0 12px 35px #d99bb633;
-}
-input{
-  width:100%;
-  padding:14px;
-  border:1px solid #efd0dc;
-  border-radius:12px;
-  background:#fffafd;
-  font-size:15px;
-  outline:none;
-}
-button{
-  border:0;
-  padding:13px 20px;
-  border-radius:25px;
-  background:linear-gradient(100deg,#e9a7bd,#d77f9e);
-  color:white;
-  font-size:14px;
-  cursor:pointer;
-}
-#loginButton{
-  width:100%;
-  margin-top:14px;
-}
-#refreshButton{
-  width:100%;
-  margin-bottom:18px;
-}
-#status{
-  text-align:center;
-  font-size:13px;
-  margin:15px 0;
-  line-height:1.6;
-}
-.message{
-  background:#fff8fb;
-  border:1px solid #f2dce5;
-  border-radius:15px;
-  padding:18px;
-  margin:14px 0;
-  overflow-wrap:anywhere;
-}
-.sender{
-  color:#bd6f90;
-  font-size:14px;
-  font-weight:bold;
-}
-.date{
-  font-family:Arial,sans-serif;
-  font-size:11px;
-  color:#b89aa7;
-  margin-top:6px;
-}
-.content{
-  font-family:Arial,sans-serif;
-  font-size:14px;
-  line-height:1.8;
-  white-space:pre-wrap;
-  margin-top:13px;
-  color:#69495a;
-}
-#inbox{display:none}
-.empty{
-  text-align:center;
-  padding:30px 10px;
-  color:#bd91a3;
-}
-.footer{
-  text-align:center;
-  color:#c39bab;
-  font-size:11px;
-  margin-top:25px;
-}
+body{margin:0;padding:30px 18px;min-height:100vh;background:#240811;color:#f6e7e7;font-family:Georgia,serif}
+main{max-width:650px;margin:30px auto}
+h1{text-align:center;font-weight:normal}
+.subtitle{text-align:center;color:#d5aab4}
+.message{padding:20px;margin:18px 0;background:#391421;border:1px solid #81505d;border-radius:13px;overflow-wrap:anywhere}
+.date{font-size:12px;color:#d69ba9;margin-bottom:12px}
+.content{font-size:17px;line-height:1.8;white-space:pre-wrap}
+button,a{display:inline-block;padding:12px 20px;margin:8px 4px;border:1px solid #bd8291;border-radius:25px;background:transparent;color:#f6e7e7;text-decoration:none;cursor:pointer}
+.actions{text-align:center}
+#status{text-align:center;color:#e4b7c2}
 </style>
 </head>
-
 <body>
-
-<div class="container">
-  <h1>Our Private Inbox 💌</h1>
-  <p class="subtitle">
-    Little words, precious memories.<br>
-    Every message is special. ♡
-  </p>
-
-  <div class="panel" id="loginPanel">
-    <p style="text-align:center">
-      Enter your private inbox password ❤️
-    </p>
-
-    <input
-      type="password"
-      id="password"
-      placeholder="Inbox password"
-      autocomplete="current-password"
-    >
-
-    <button id="loginButton" type="button">
-      Open My Inbox 💗
-    </button>
-
-    <div id="status" aria-live="polite"></div>
-  </div>
-
-  <div id="inbox">
-    <button id="refreshButton" type="button">
-      Refresh Messages ↻
-    </button>
-    <div id="messages"></div>
-  </div>
-
-  <div class="footer">
-    Your little universe ♡
-  </div>
+<main>
+<h1>Our Little Inbox ❤️</h1>
+<p class="subtitle">Every message is special.</p>
+<div class="actions">
+ <button onclick="loadMessages()">Refresh Messages ↻</button>
+ <a href="/surprise.html">Back to Website</a>
 </div>
+<p id="status">Loading messages...</p>
+<div id="messages"></div>
+</main>
 
 <script>
-const loginPanel = document.getElementById("loginPanel");
-const inbox = document.getElementById("inbox");
-const statusText = document.getElementById("status");
-const messagesBox = document.getElementById("messages");
-
-let inboxPassword = "";
-
-document.getElementById("loginButton").addEventListener("click", async()=>{
-  const password = document.getElementById("password").value;
-
-  if(!password){
-    statusText.textContent = "Masukkan password terlebih dahulu.";
-    return;
-  }
-
-  inboxPassword = password;
-  statusText.textContent = "Memeriksa password...";
-
-  await loadMessages();
-});
-
-document.getElementById("refreshButton").addEventListener("click",()=>{
-  loadMessages();
-});
-
 async function loadMessages(){
-  const button = document.getElementById("loginButton");
-  button.disabled = true;
+ const container=document.getElementById("messages");
+ const status=document.getElementById("status");
+ status.textContent="Loading...";
+ container.replaceChildren();
 
-  try{
-    const res = await fetch("/api/messages",{
-      method:"GET",
-      cache:"no-store",
-      headers:{
-        "X-Inbox-Password":inboxPassword
-      }
-    });
+ try{
+  const response=await fetch("/api/messages");
+  const data=await response.json();
 
-    const data = await res.json();
+  if(!response.ok)throw new Error(data.error||"Failed");
 
-    if(!res.ok || !data.success){
-      throw new Error(data.error || "Tidak dapat membuka inbox.");
-    }
-
-    loginPanel.style.display = "none";
-    inbox.style.display = "block";
-    messagesBox.replaceChildren();
-
-    if(!data.messages || data.messages.length===0){
-      const empty = document.createElement("div");
-      empty.className = "empty";
-      empty.textContent = "Belum ada pesan. Semoga segera ada surat manis! 💌";
-      messagesBox.appendChild(empty);
-      return;
-    }
-
-    data.messages.forEach(item=>{
-      const card = document.createElement("article");
-      card.className = "message";
-
-      const sender = document.createElement("div");
-      sender.className = "sender";
-      sender.textContent = "💗 " + (item.sender_name || "Anonymous");
-
-      const date = document.createElement("div");
-      date.className = "date";
-      date.textContent = item.created_at || "";
-
-      const content = document.createElement("div");
-      content.className = "content";
-      content.textContent = item.message || "";
-
-      card.append(sender,date,content);
-      messagesBox.appendChild(card);
-    });
-
-  }catch(error){
-    statusText.textContent = error.message;
-    inboxPassword = "";
-  }finally{
-    button.disabled = false;
+  if(!data.messages.length){
+   status.textContent="Belum ada pesan masuk ❤️";
+   return;
   }
-}
-</script>
 
+  status.textContent=data.messages.length+" pesan diterima ❤️";
+
+  data.messages.forEach(item=>{
+   const card=document.createElement("article");
+   card.className="message";
+
+   const date=document.createElement("div");
+   date.className="date";
+   date.textContent=item.created_at||"";
+
+   const content=document.createElement("div");
+   content.className="content";
+   content.textContent=item.message;
+
+   card.append(date,content);
+   container.append(card);
+  });
+ }catch(error){
+  status.textContent="Gagal mengambil pesan. Pastikan sudah login.";
+ }
+}
+loadMessages();
+</script>
 </body>
 </html>
