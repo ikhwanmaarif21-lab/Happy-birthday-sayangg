@@ -1,18 +1,11 @@
-function response(data, status = 200, headers = {}) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": "no-store",
-      ...headers
-    }
-  });
-}
 
-async function sign(value, password) {
+const SESSION_COOKIE = "birthday_session";
+const SESSION_DURATION = 8 * 60 * 60;
+
+async function sign(value, secret) {
   const key = await crypto.subtle.importKey(
     "raw",
-    new TextEncoder().encode(password),
+    new TextEncoder().encode(secret),
     { name: "HMAC", hash: "SHA-256" },
     false,
     ["sign"]
@@ -27,147 +20,166 @@ async function sign(value, password) {
   return btoa(String.fromCharCode(...new Uint8Array(signature)))
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
-    .replace(/=+$/,"");
+    .replace(/=+$/, "");
 }
 
-function getCookie(request) {
-  const cookies = request.headers.get("Cookie") || "";
-  const match = cookies.match(/(?:^|;\s*)birthday_session=([^;]+)/);
-  return match ? match[1] : null;
-}
+async function validSession(request, secret) {
+  const cookie = request.headers.get("Cookie") || "";
+  const match = cookie.match(/birthday_session=([^;]+)/);
 
-async function validSession(request, password) {
-  const token = getCookie(request);
-  if (!token) return false;
+  if (!match) return false;
 
-  const parts = token.split(".");
+  const parts = match[1].split(".");
   if (parts.length !== 2) return false;
 
-  try {
-    const expiry = atob(parts[0]);
+  const timestamp = Number(parts[0]);
+  if (!Number.isFinite(timestamp)) return false;
 
-    if (!/^\d+$/.test(expiry) || Number(expiry) < Date.now()) {
-      return false;
-    }
+  const now = Math.floor(Date.now() / 1000);
 
-    return (await sign(parts[0], password)) === parts[1];
-  } catch (e) {
+  if (now < timestamp || now - timestamp > SESSION_DURATION) {
     return false;
   }
+
+  const expected = await sign(parts[0], secret);
+  return expected === parts[1];
+}
+
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store"
+    }
+  });
+}
+
+async function readBody(request) {
+  const length = Number(request.headers.get("Content-Length") || 0);
+  if (length > 10000) throw new Error("Request terlalu besar");
+
+  return await request.json();
 }
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const path = url.pathname;
+    const method = request.method;
+
+    const secret = env.BIRTHDAY_PASSWORD;
+
+    if (!secret || !env.DB || !env.ASSETS) {
+      return json({ error: "Konfigurasi server belum lengkap." }, 500);
+    }
 
     // LOGIN
-    if (path === "/api/login") {
-      if (request.method !== "POST") {
-        return response({ success: false }, 405);
-      }
-
+    if (path === "/api/login" && method === "POST") {
       try {
-        const body = await request.json();
+        const body = await readBody(request);
 
         if (
           typeof body.password !== "string" ||
-          body.password.length > 200
+          body.password !== secret
         ) {
-          return response({ success: false }, 400);
+          return json({ success: false, error: "Password salah." }, 401);
         }
 
-        if (body.password !== env.BIRTHDAY_PASSWORD) {
-          return response({ success: false }, 401);
-        }
+        const timestamp = String(Math.floor(Date.now() / 1000));
+        const signature = await sign(timestamp, secret);
+        const token = timestamp + "." + signature;
 
-        const expiry = String(Date.now() + 8 * 60 * 60 * 1000);
-        const payload = btoa(expiry);
-        const signature = await sign(payload, env.BIRTHDAY_PASSWORD);
-        const token = payload + "." + signature;
-
-        return response({ success: true }, 200, {
-          "Set-Cookie":
-            `birthday_session=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=28800`
-        });
-      } catch (e) {
-        return response({ success: false }, 400);
+        return new Response(
+          JSON.stringify({ success: true }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Cache-Control": "no-store",
+              "Set-Cookie":
+                `${SESSION_COOKIE}=${token}; Max-Age=${SESSION_DURATION}; Path=/; HttpOnly; Secure; SameSite=Lax`
+            }
+          }
+        );
+      } catch {
+        return json({ error: "Permintaan login tidak valid." }, 400);
       }
     }
 
-    // KIRIM PESAN - BOLEH TANPA LOGIN
-    if (path === "/api/messages" && request.method === "POST") {
+    // LOGOUT
+    if (path === "/api/logout" && method === "POST") {
+      return new Response(JSON.stringify({ success: true }), {
+        headers: {
+          "Content-Type": "application/json",
+          "Set-Cookie":
+            `${SESSION_COOKIE}=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Lax`
+        }
+      });
+    }
+
+    // CEK LOGIN
+    const authenticated = await validSession(request, secret);
+
+    // HALAMAN LOGIN TETAP PUBLIK
+    if (
+      path === "/" ||
+      path === "/index.html"
+    ) {
+      return env.ASSETS.fetch(request);
+    }
+
+    // SEMUA HALAMAN DAN API LAIN MEMERLUKAN LOGIN
+    if (!authenticated) {
+      if (path.startsWith("/api/")) {
+        return json({ error: "Silakan login terlebih dahulu." }, 401);
+      }
+
+      return Response.redirect(new URL("/", request.url), 302);
+    }
+
+    // SIMPAN PESAN
+    if (path === "/api/messages" && method === "POST") {
       try {
-        const body = await request.json();
-
-        const sender = typeof body.sender_name === "string"
-          ? body.sender_name.trim().slice(0, 60)
-          : "Anonymous";
-
+        const body = await readBody(request);
         const message = typeof body.message === "string"
           ? body.message.trim()
           : "";
 
-        if (!message || message.length > 2000) {
-          return response({
-            success: false,
-            error: "Pesan harus diisi dan maksimal 2000 karakter."
-          }, 400);
+        if (!message) {
+          return json({ error: "Pesan tidak boleh kosong." }, 400);
         }
 
-        if (!env.DB) {
-          return response({ success: false, error: "Database belum terhubung." }, 503);
+        if (message.length > 2000) {
+          return json({ error: "Pesan maksimal 2000 karakter." }, 400);
         }
 
         await env.DB.prepare(
-          "INSERT INTO messages (sender_name, message) VALUES (?, ?)"
-        ).bind(sender || "Anonymous", message).run();
+          "INSERT INTO messages (message) VALUES (?)"
+        ).bind(message).run();
 
-        return response({ success: true });
-      } catch (e) {
-        return response({ success: false, error: "Gagal menyimpan pesan." }, 500);
+        return json({ success: true });
+      } catch {
+        return json({ error: "Gagal menyimpan pesan." }, 500);
       }
     }
 
-    // BACA INBOX - HANYA DENGAN PASSWORD ADMIN
-    if (path === "/api/messages" && request.method === "GET") {
-      if (!env.INBOX_PASSWORD) {
-        return response({ success: false, error: "Password inbox belum diatur." }, 503);
-      }
-
-      const adminPassword = request.headers.get("X-Inbox-Password");
-
-      if (adminPassword !== env.INBOX_PASSWORD) {
-        return response({ success: false, error: "Password inbox salah." }, 401);
-      }
-
+    // AMBIL PESAN UNTUK INBOX
+    if (path === "/api/messages" && method === "GET") {
       try {
         const result = await env.DB.prepare(
-          "SELECT id, sender_name, message, created_at FROM messages ORDER BY id DESC LIMIT 200"
+          "SELECT id, message, created_at FROM messages ORDER BY id DESC LIMIT 200"
         ).all();
 
-        return response({
+        return json({
           success: true,
           messages: result.results || []
         });
-      } catch (e) {
-        return response({ success: false, error: "Gagal membaca pesan." }, 500);
+      } catch {
+        return json({ error: "Gagal mengambil pesan." }, 500);
       }
     }
 
-    // HALAMAN LOGIN BOLEH DIBUKA TANPA PASSWORD
-    if (path === "/" || path === "/index.html") {
-      return env.ASSETS.fetch(request);
-    }
-
-    // HALAMAN DAN FILE LAINNYA WAJIB LOGIN
-    if (!(await validSession(request, env.BIRTHDAY_PASSWORD))) {
-      return new Response("Silakan login terlebih dahulu.", {
-        status: 401,
-        headers: { "Content-Type": "text/plain" }
-      });
-    }
-
+    // HALAMAN WEBSITE LAIN
     return env.ASSETS.fetch(request);
   }
 };
