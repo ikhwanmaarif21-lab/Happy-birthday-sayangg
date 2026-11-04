@@ -95,7 +95,63 @@ section{
 .hidden{display:none}
 .fade{animation:appear 1.5s ease both}
 @keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:/* MESSAGE SECTION */
+.guest-message{
+ background:radial-gradient(ellipse,#641d32,#300914 75%);
+ padding:85px 22px;
+}
+
+.message-box{
+ max-width:480px;
+ margin:35px auto 0;
+ text-align:left;
+ border:1px solid var(--gold);
+ padding:25px 20px;
+}
+
+.message-box label{
+ display:block;
+ color:var(--gold);
+ font-size:10px;
+ letter-spacing:3px;
+ margin:18px 0 10px;
+}
+
+.message-box input,
+.message-box textarea{
+ width:100%;
+ padding:14px;
+ background:#451321;
+ border:1px solid #c9a65b88;
+ color:var(--cream);
+ font-family:inherit;
+ font-size:13px;
+ outline:none;
+ border-radius:0;
+}
+
+.message-box textarea{
+ min-height:120px;
+ resize:vertical;
+}
+
+.message-box input::placeholder,
+.message-box textarea::placeholder{
+ color:#c9a99e;
+}
+
+.message-box button{
+ width:100%;
+ margin-top:20px;
+}
+
+#messageStatus{
+ text-align:center;
+ font-size:12px;
+ line-height:1.8;
+ margin-top:15px;
+ min-height:22px;
+}
 </style>
 </head>
 
@@ -181,7 +237,55 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
   </div>
   <div class="heart">✦ ♡ ✦</div>
   <p class="footer">MADE WITH LOVE, JUST FOR YOU</p>
- </section>
+ </section><section class="guest-message">
+
+ <p class="small">A LITTLE MESSAGE FOR ME</p>
+
+ <h2 class="section-title" style="margin-top:20px">
+  Your Words ♡
+ </h2>
+
+ <div class="line"></div>
+
+ <p style="font-size:12px;line-height:2">
+  Sebelum pergi, tinggalkan sedikit pesan
+  yang bisa aku simpan sebagai kenangan.
+ </p>
+
+ <form id="messageForm" class="message-box">
+
+  <label for="senderName">YOUR NAME</label>
+
+  <input
+   type="text"
+   id="senderName"
+   placeholder="Nama kamu..."
+   maxlength="50"
+   required
+  >
+
+  <label for="guestMessage">YOUR MESSAGE</label>
+
+  <textarea
+   id="guestMessage"
+   placeholder="Tulis pesanmu di sini..."
+   maxlength="1000"
+   required
+  ></textarea>
+
+  <button type="submit" class="gold-btn">
+   SEND YOUR MESSAGE ♡
+  </button>
+
+  <p id="messageStatus"></p>
+
+ </form>
+
+ <p class="footer" style="margin-top:35px">
+  EVERY WORD IS A LITTLE MEMORY
+ </p>
+
+</section>
 </div>
 
 <audio id="bgMusic" loop>
@@ -245,6 +349,61 @@ function confetti(){
  }
  draw();
 }
+ // SEND MESSAGE
+document.getElementById("messageForm")
+.addEventListener("submit", async function(e){
+
+ e.preventDefault();
+
+ const name=document.getElementById("senderName");
+ const message=document.getElementById("guestMessage");
+ const status=document.getElementById("messageStatus");
+ const button=this.querySelector("button");
+
+ button.disabled=true;
+ button.textContent="SENDING...";
+ status.textContent="";
+
+ try{
+
+  const response=await fetch("/api/messages",{
+   method:"POST",
+   headers:{
+    "Content-Type":"application/json"
+   },
+   body:JSON.stringify({
+    sender_name:name.value.trim(),
+    message:message.value.trim()
+   })
+  });
+
+  const result=await response.json();
+
+  if(response.ok && result.success){
+
+   status.textContent="Pesan berhasil dikirim. Terima kasih ♡";
+   status.style.color="#d6b46a";
+
+   name.value="";
+   message.value="";
+
+  }else{
+
+   throw new Error("Gagal mengirim pesan");
+
+  }
+
+ }catch(error){
+
+  status.textContent="Pesan gagal dikirim. Coba lagi ya.";
+  status.style.color="#ff9da7";
+
+ }
+
+ button.disabled=false;
+ button.textContent="SEND YOUR MESSAGE ♡";
+
+});
 </script>
 </body>
 </html>
