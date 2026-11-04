@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Letter for Us 💌</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Georgia,serif;
+  background:linear-gradient(145deg,#fff5f7,#fce4ec,#fff0f4);
+  color:#75475b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  overflow-x:hidden;
+}
+.card{
+  width:100%;
+  max-width:460px;
+  background:rgba(255,255,255,.86);
+  border:1px solid #f6d5e0;
+  border-radius:25px;
+  padding:30px 23px;
+  box-shadow:0 15px 45px #d99bb633;
+  position:relative;
+  z-index:2;
+}
+h1{
+  text-align:center;
+  font-size:30px;
+  color:#c66d91;
+  font-weight:normal;
+  margin:8px 0;
+}
+.subtitle{
+  text-align:center;
+  font-size:13px;
+  color:#b58a9d;
+  line-height:1.8;
+}
+.heart{
+  text-align:center;
+  font-size:36px;
+  animation:pulse 1.8s infinite;
+}
+@keyframes pulse{
+  50%{transform:scale(1.18)}
+}
+label{
+  display:block;
+  margin:22px 0 8px;
+  font-size:13px;
+}
+input,textarea{
+  width:100%;
+  padding:14px;
+  border:1px solid #efd0dc;
+  border-radius:13px;
+  outline:none;
+  background:#fffafd;
+  color:#75475b;
+  font-family:Arial,sans-serif;
+  font-size:14px;
+}
+textarea{
+  min-height:150px;
+  resize:vertical;
+  line-height:1.7;
+}
+input:focus,textarea:focus{
+  border-color:#d98eaa;
+  box-shadow:0 0 0 3px #fce4ec;
+}
+button{
+  width:100%;
+  margin-top:20px;
+  padding:15px;
+  border:0;
+  border-radius:30px;
+  background:linear-gradient(100deg,#e9a7bd,#d77f9e);
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+}
+button:disabled{opacity:.6;cursor:wait}
+#status{
+  text-align:center;
+  font-size:13px;
+  line-height:1.6;
+  margin-top:17px;
+  min-height:22px;
+}
+.footer{
+  text-align:center;
+  margin-top:24px;
+  font-size:11px;
+  color:#c39bab;
+}
+.float{
+  position:fixed;
+  pointer-events:none;
+  z-index:1;
+  animation:floatUp 9s linear infinite;
+  opacity:0;
+}
+@keyframes floatUp{
+  0%{transform:translateY(105vh) rotate(0);opacity:0}
+  15%{opacity:.7}
+  90%{opacity:.6}
+  100%{transform:translateY(-15vh) rotate(35deg);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="heart">💌</div>
+
+  <h1>A Letter for Us</h1>
+
+  <p class="subtitle">
+    Every little word means something.<br>
+    Write something from your heart.
+  </p>
+
+  <form id="letterForm">
+    <label for="sender">Your name</label>
+    <input
+      id="sender"
+      type="text"
+      maxlength="60"
+      placeholder="Siapa namamu?"
+    >
+
+    <label for="message">Your little message ❤️</label>
+    <textarea
+      id="message"
+      maxlength="2000"
+      required
+      placeholder="Tulis sesuatu yang ingin kamu sampaikan..."
+    ></textarea>
+
+    <button id="sendButton" type="submit">
+      Send My Love 💗
+    </button>
+  </form>
+
+  <div id="status" aria-live="polite"></div>
+
+  <div class="footer">
+    Made with love, just for us ♡
+  </div>
+</div>
+
+<script>
+const form = document.getElementById("letterForm");
+const button = document.getElementById("sendButton");
+const statusText = document.getElementById("status");
+
+form.addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  const sender = document.getElementById("sender").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  if(!message){
+    statusText.textContent = "Tulis pesanmu terlebih dahulu ya ❤️";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Sending... 💌";
+  statusText.textContent = "Mengirim pesanmu...";
+
+  try{
+    const res = await fetch("/api/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        sender_name:sender || "Anonymous",
+        message:message
+      })
+    });
+
+    const data = await res.json();
+
+    if(!res.ok || !data.success){
+      throw new Error(data.error || "Pesan gagal dikirim.");
+    }
+
+    form.reset();
+    statusText.textContent = "Pesanmu berhasil dikirim. Terima kasih, sayang! ❤️";
+  }catch(error){
+    statusText.textContent = error.message || "Terjadi kesalahan. Coba lagi ya.";
+  }finally{
+    button.disabled = false;
+    button.textContent = "Send My Love 💗";
+  }
+});
+
+// Floating hearts and sparkles
+const decorations = ["♡","♥","✧","✨","🦋"];
+
+function createDecoration(){
+  const el = document.createElement("div");
+  el.className = "float";
+  el.textContent = decorations[
+    Math.floor(Math.random()*decorations.length)
+  ];
+  el.style.left = Math.random()*100+"%";
+  el.style.fontSize = (14+Math.random()*17)+"px";
+  el.style.animationDuration = (7+Math.random()*6)+"s";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),14000);
+}
+
+setInterval(createDecoration,1000);
+</script>
+
+</body>
+</html>
