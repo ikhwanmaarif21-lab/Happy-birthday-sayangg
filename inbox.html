@@ -5,72 +5,106 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#300914">
-<title>Message Inbox ❤️</title>
+<title>Our Little Inbox ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
-body{margin:0;padding:30px 18px;min-height:100vh;background:#240811;color:#f6e7e7;font-family:Georgia,serif}
+body{
+ margin:0;min-height:100svh;padding:30px 20px;
+ background:radial-gradient(ellipse,#641d32,#300914 75%);
+ color:#f4e4c1;font-family:Montserrat,sans-serif;
+}
 main{max-width:650px;margin:30px auto}
-h1{text-align:center;font-weight:normal}
-.subtitle{text-align:center;color:#d5aab4}
-.message{padding:20px;margin:18px 0;background:#391421;border:1px solid #81505d;border-radius:13px;overflow-wrap:anywhere}
-.date{font-size:12px;color:#d69ba9;margin-bottom:12px}
-.content{font-size:17px;line-height:1.8;white-space:pre-wrap}
-button,a{display:inline-block;padding:12px 20px;margin:8px 4px;border:1px solid #bd8291;border-radius:25px;background:transparent;color:#f6e7e7;text-decoration:none;cursor:pointer}
-.actions{text-align:center}
-#status{text-align:center;color:#e4b7c2}
+header{text-align:center;margin-bottom:35px}
+.small{font-size:10px;letter-spacing:5px;color:#d6b46a}
+h1{
+ font-family:'Great Vibes',cursive;font-size:48px;
+ font-weight:400;color:#d6b46a;margin:20px 0;
+}
+.line{width:65px;height:1px;background:#d6b46a;margin:20px auto}
+#status{text-align:center;font-size:13px;line-height:1.8}
+.message-card{
+ padding:22px;margin:18px 0;
+ border:1px solid #d6b46a;background:#ffffff08;
+}
+.date{font-size:10px;color:#d6b46a;letter-spacing:1px;margin-bottom:15px}
+.content{
+ font-family:'Cormorant Garamond',serif;
+ font-size:22px;line-height:1.7;
+ white-space:pre-wrap;overflow-wrap:anywhere;
+}
+.actions{text-align:center;margin:30px 0}
+button,a{
+ display:inline-block;padding:13px 20px;margin:5px;
+ background:transparent;color:#d6b46a;
+ border:1px solid #d6b46a;text-decoration:none;
+ font-size:10px;letter-spacing:1px;cursor:pointer;
+}
 </style>
 </head>
 <body>
 <main>
-<h1>Our Little Inbox ❤️</h1>
-<p class="subtitle">Every message is special.</p>
+<header>
+ <p class="small">OUR LITTLE UNIVERSE</p>
+ <h1>Little Messages</h1>
+ <div class="line"></div>
+ <p style="font-size:12px">Every word is a beautiful memory. ❤️</p>
+</header>
+
 <div class="actions">
- <button onclick="loadMessages()">Refresh Messages ↻</button>
- <a href="/surprise.html">Back to Website</a>
+ <button id="refreshButton" onclick="loadMessages()">REFRESH ♡</button>
+ <a href="/surprise.html">BACK TO WEBSITE</a>
 </div>
+
 <p id="status">Loading messages...</p>
 <div id="messages"></div>
 </main>
 
 <script>
 async function loadMessages(){
- const container=document.getElementById("messages");
- const status=document.getElementById("status");
- status.textContent="Loading...";
+ const status=document.getElementById('status');
+ const container=document.getElementById('messages');
+ const button=document.getElementById('refreshButton');
+
+ button.disabled=true;
+ status.textContent='Loading messages...';
  container.replaceChildren();
 
  try{
-  const response=await fetch("/api/messages");
+  const response=await fetch('/api/messages',{cache:'no-store'});
   const data=await response.json();
 
-  if(!response.ok)throw new Error(data.error||"Failed");
+  if(!response.ok)throw new Error(data.error||'Failed');
 
-  if(!data.messages.length){
-   status.textContent="Belum ada pesan masuk ❤️";
+  if(!data.messages||data.messages.length===0){
+   status.textContent='Belum ada pesan masuk ❤️';
    return;
   }
 
-  status.textContent=data.messages.length+" pesan diterima ❤️";
+  status.textContent=data.messages.length+' beautiful message(s) received ❤️';
 
   data.messages.forEach(item=>{
-   const card=document.createElement("article");
-   card.className="message";
+   const card=document.createElement('article');
+   card.className='message-card';
 
-   const date=document.createElement("div");
-   date.className="date";
-   date.textContent=item.created_at||"";
+   const date=document.createElement('div');
+   date.className='date';
+   date.textContent=item.created_at||'';
 
-   const content=document.createElement("div");
-   content.className="content";
+   const content=document.createElement('div');
+   content.className='content';
    content.textContent=item.message;
 
    card.append(date,content);
    container.append(card);
   });
  }catch(error){
-  status.textContent="Gagal mengambil pesan. Pastikan sudah login.";
+  status.textContent='Tidak dapat mengambil pesan. Silakan login kembali.';
+ }finally{
+  button.disabled=false;
  }
 }
+
 loadMessages();
 </script>
 </body>
