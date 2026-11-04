@@ -1,408 +1,161 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#300914">
-<title>For Someone Special ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-
+<title>Our Little Universe ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
- background:#300914;
- color:#f4e4c1;
- font-family:'Montserrat',sans-serif;
- overflow-x:hidden;
-}
-:root{--gold:#d6b46a;--cream:#f4e4c1;--maroon:#300914}
-button{cursor:pointer;font-family:inherit}
-#opening{
- min-height:100svh;
- display:flex;align-items:center;justify-content:center;
- text-align:center;padding:25px;
- background:radial-gradient(ellipse,#641d32,#300914 75%);
-}
-.frame{
- border:1px solid var(--gold);
- outline:1px solid #d6b46a55;
- outline-offset:8px;
- padding:45px 24px;
- width:min(100%,430px);
-}
-.small{letter-spacing:5px;font-size:10px;color:var(--gold)}
-.script{font-family:'Great Vibes',cursive;color:var(--gold)}
-h1{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:400;margin:22px 0}
-.envelope{
- font-size:65px;margin:25px 0;
- animation:float 2.5s ease-in-out infinite;
-}
-@keyframes float{50%{transform:translateY(-10px)}}
-.gold-btn{
- background:var(--gold);color:#32101b;border:0;
- padding:14px 30px;letter-spacing:2px;
- font-size:11px;margin-top:25px;
- transition:.3s;
-}
-.gold-btn:hover{transform:scale(1.05)}
-#main{display:none}
-section{
- padding:90px 22px;text-align:center;
- position:relative;
-}
-.hero{
- min-height:90svh;display:flex;flex-direction:column;
- justify-content:center;align-items:center;
- background:linear-gradient(#300914cc,#300914ee),url('photo1.jpg') center/cover;
-}
-.hero h2{font-size:clamp(48px,12vw,76px);line-height:1.1;margin:25px 0}
-.hero p{font-size:12px;letter-spacing:3px}
-.line{width:65px;height:1px;background:var(--gold);margin:25px auto}
-.section-title{
- font-family:'Cormorant Garamond',serif;
- font-size:38px;font-weight:400;color:var(--gold);
- margin-bottom:20px;
-}
-.message{
- max-width:570px;margin:auto;
- font-family:'Cormorant Garamond',serif;
- font-size:21px;line-height:1.9;color:var(--cream);
-}
-.heart{color:var(--gold);font-size:25px;margin:20px}
-.gallery{
- display:grid;grid-template-columns:1fr 1fr;
- gap:12px;max-width:550px;margin:35px auto;
-}
-.gallery img{
- width:100%;height:210px;object-fit:cover;
- border:1px solid var(--gold);padding:4px;
-}
-.gallery img:first-child{grid-column:span 2;height:270px}
-.final{
- background:radial-gradient(ellipse,#641d32,#300914 75%);
- min-height:75svh;
- display:flex;flex-direction:column;justify-content:center;
-}
-.footer{font-size:10px;letter-spacing:3px;color:var(--gold)}
-#music{
- position:fixed;right:18px;bottom:18px;
- background:var(--gold);color:#300914;
- border:0;border-radius:50%;width:45px;height:45px;
- font-size:19px;z-index:10;
-}
-.hidden{display:none}
-.fade{animation:appear 1.5s ease both}
-@keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-canvas{position:fixed;inset:0;pointer-events:none;z-index:/* MESSAGE SECTION */
-.guest-message{
- background:radial-gradient(ellipse,#641d32,#300914 75%);
- padding:85px 22px;
-}
-
-.message-box{
- max-width:480px;
- margin:35px auto 0;
- text-align:left;
- border:1px solid var(--gold);
- padding:25px 20px;
-}
-
-.message-box label{
- display:block;
- color:var(--gold);
- font-size:10px;
- letter-spacing:3px;
- margin:18px 0 10px;
-}
-
-.message-box input,
-.message-box textarea{
- width:100%;
- padding:14px;
- background:#451321;
- border:1px solid #c9a65b88;
- color:var(--cream);
- font-family:inherit;
- font-size:13px;
- outline:none;
- border-radius:0;
-}
-
-.message-box textarea{
- min-height:120px;
- resize:vertical;
-}
-
-.message-box input::placeholder,
-.message-box textarea::placeholder{
- color:#c9a99e;
-}
-
-.message-box button{
- width:100%;
- margin-top:20px;
-}
-
-#messageStatus{
- text-align:center;
- font-size:12px;
- line-height:1.8;
- margin-top:15px;
- min-height:22px;
-}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#240811;color:#f6e7e7;font-family:'Cormorant Garamond',serif;text-align:center}
+section{padding:75px 22px}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(#24081199,#240811dd),url('/foto/Foto1.JPG') center/cover}
+.small{letter-spacing:4px;color:#d69ba9;font-size:12px}
+h1,h2{font-family:'Playfair Display',serif;font-weight:400}
+h1{font-size:43px}
+h2{font-size:31px}
+p{line-height:1.9;color:#e3c9cd}
+.content{max-width:650px;margin:auto}
+.line{width:55px;height:1px;background:#bd7e8e;margin:20px auto}
+.btn{display:inline-block;border:1px solid #c98c9c;color:#f9e5e9;background:transparent;padding:13px 27px;border-radius:30px;text-decoration:none;margin-top:20px;cursor:pointer;font-family:inherit;font-size:17px}
+.photo-grid{max-width:850px;margin:35px auto;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.photo-grid img{width:100%;height:240px;object-fit:cover;border-radius:12px;border:1px solid #8b5361}
+.letter{padding:28px 23px;background:#391421;border:1px solid #81505d;border-radius:15px;text-align:left}
+.letter p{font-size:19px}
+.love{background:linear-gradient(#240811,#4a1428,#240811)}
+.love h2{font-size:43px;color:#edb6c2}
+.guest-message{background:linear-gradient(180deg,#240811,#3b1020);padding:85px 22px 100px}
+.message-card{max-width:480px;margin:auto;padding:35px 25px;background:rgba(255,255,255,.045);border:1px solid #a56b79;border-radius:18px;box-shadow:0 15px 40px #0005}
+.message-card h2{font-size:32px;margin:12px 0}
+.message-card .sub{font-size:17px;color:#d7aab5}
+textarea{width:100%;min-height:150px;resize:vertical;padding:17px;margin-top:22px;border-radius:12px;border:1px solid #a66b79;background:#fff8f8;color:#35101d;font-family:inherit;font-size:17px;outline:none}
+textarea:focus{border-color:#edb6c2;box-shadow:0 0 0 2px #edb6c233}
+.send{width:100%;margin-top:17px;padding:15px;border:0;border-radius:30px;background:#a94f68;color:white;font-family:inherit;font-size:18px;cursor:pointer}
+.send:disabled{opacity:.6}
+#messageStatus{min-height:25px;font-size:16px;margin-top:15px}
+footer{padding:25px;color:#b98d97;font-size:13px}
+@media(max-width:480px){h1{font-size:35px}.photo-grid img{height:180px}.message-card{padding:28px 18px}}
 </style>
 </head>
-
 <body>
 
-<div id="opening">
- <div class="frame">
-  <div class="small">A SPECIAL INVITATION</div>
-  <div class="envelope">✉</div>
-  <p class="script" style="font-size:35px">For My Love</p>
-  <h1>A Special Day</h1>
-  <div class="line"></div>
-  <p style="font-size:11px;line-height:2">
-   Ada sesuatu yang ingin aku berikan<br>
-   khusus untuk seseorang yang istimewa.
-  </p>
-  <button class="gold-btn" onclick="openGift()">BUKA KEJUTAN ♡</button>
- </div>
-</div>
-
-<div id="main">
- <section class="hero">
-  <p class="small">TODAY IS ALL ABOUT YOU</p>
-  <h2 class="script">Happy Birthday</h2>
-  <h1 id="personName" style="font-size:48px">My Love</h1>
-  <div class="line"></div>
-  <p>ANOTHER BEAUTIFUL CHAPTER BEGINS</p>
-  <div class="heart">✧ ♡ ✧</div>
- </section>
-
- <section>
-  <p class="small">A LETTER FROM MY HEART</p>
-  <h2 class="section-title">Untuk Kamu</h2>
-  <div class="line"></div>
-  <div class="message">
-   Selamat ulang tahun, sayangku. ❤️
-   <br><br>
-   Hari ini adalah hari istimewa karena seseorang
-   yang begitu berarti dalam hidupku dilahirkan.
-   <br><br>
-   Terima kasih sudah hadir, sudah menjadi bagian
-   dari cerita hidupku, dan sudah memberikan
-   begitu banyak alasan untuk tersenyum.
-   <br><br>
-   Aku berharap setiap langkahmu dipenuhi
-   kebahagiaan, kesehatan, cinta, dan semua
-   hal indah yang selama ini kamu impikan.
-   <br><br>
-   Semoga aku masih bisa menjadi bagian
-   dari banyak cerita indahmu berikutnya.
-   <br><br>
-   <span class="script" style="font-size:38px;color:#d6b46a">
-    With all my love ♡
-   </span>
-  </div>
- </section>
-
- <section>
-  <p class="small">OUR LITTLE UNIVERSE</p>
-  <h2 class="section-title">Beautiful Memories</h2>
-  <div class="line"></div>
-  <p style="font-size:12px;line-height:2">
-   Beberapa kenangan yang selalu ingin aku simpan.
-  </p>
-  <div class="gallery">
-   <img src="/foto/Foto1.JPG" alt="Kenangan">
-  </div>
- </section>
-
- <section class="final">
-  <p class="small">ONE LAST THING</p>
-  <h2 class="script" style="font-size:55px;margin:25px 0">
-   I Love You
-  </h2>
-  <div class="line"></div>
-  <div class="message">
-   Dunia mungkin begitu luas,
-   tetapi aku selalu bersyukur
-   karena di antara banyak kemungkinan,
-   aku bisa mengenalmu.
-   <br><br>
-   Happy Birthday, my favorite person. ❤️
-  </div>
-  <div class="heart">✦ ♡ ✦</div>
-  <p class="footer">MADE WITH LOVE, JUST FOR YOU</p>
- </section><section class="guest-message">
-
- <p class="small">A LITTLE MESSAGE FOR ME</p>
-
- <h2 class="section-title" style="margin-top:20px">
-  Your Words ♡
- </h2>
-
+<main>
+<section class="hero">
+ <p class="small">A LITTLE SURPRISE FOR YOU</p>
+ <h1>Our Little Universe</h1>
  <div class="line"></div>
-
- <p style="font-size:12px;line-height:2">
-  Sebelum pergi, tinggalkan sedikit pesan
-  yang bisa aku simpan sebagai kenangan.
- </p>
-
- <form id="messageForm" class="message-box">
-
-  <label for="senderName">YOUR NAME</label>
-
-  <input
-   type="text"
-   id="senderName"
-   placeholder="Nama kamu..."
-   maxlength="50"
-   required
-  >
-
-  <label for="guestMessage">YOUR MESSAGE</label>
-
-  <textarea
-   id="guestMessage"
-   placeholder="Tulis pesanmu di sini..."
-   maxlength="1000"
-   required
-  ></textarea>
-
-  <button type="submit" class="gold-btn">
-   SEND YOUR MESSAGE ♡
-  </button>
-
-  <p id="messageStatus"></p>
-
- </form>
-
- <p class="footer" style="margin-top:35px">
-  EVERY WORD IS A LITTLE MEMORY
- </p>
-
+ <p>Untuk seseorang yang selalu punya tempat istimewa di hati. ❤️</p>
+ <a href="#memories" class="btn">Let's Begin ♡</a>
 </section>
-</div>
 
-<audio id="bgMusic" loop>
- <source src="/music/music.mp3" type="audio/mpeg">
-</audio>
+<section id="memories">
+ <div class="content">
+  <p class="small">OUR LITTLE UNIVERSE</p>
+  <h2>Beautiful Memories</h2>
+  <div class="line"></div>
+  <p>Beberapa kenangan yang selalu ingin aku simpan.</p>
+ </div>
 
-<button id="music" class="hidden" onclick="toggleMusic()">♫</button>
-<canvas id="confetti"></canvas>
+ <div class="photo-grid">
+  <img src="/foto/Foto1.JPG" alt="Memory 1">
+  <img src="/foto/Foto2.JPG" alt="Memory 2">
+  <img src="/foto/Foto3.JPG" alt="Memory 3">
+  <img src="/foto/Foto4.JPG" alt="Memory 4">
+ </div>
+</section>
+
+<section>
+ <div class="content">
+  <p class="small">A LETTER FROM MY HEART</p>
+  <h2>Little Love Letter</h2>
+  <div class="line"></div>
+  <div class="letter">
+   <p>Untuk kamu, seseorang yang begitu berarti.</p>
+   <p>
+    Terima kasih sudah hadir dan menjadi bagian dari cerita ini.
+    Semoga setiap langkahmu dipenuhi kebahagiaan, setiap harimu
+    membawa alasan untuk tersenyum, dan semua impianmu perlahan
+    menjadi nyata.
+   </p>
+   <p>
+    Aku mungkin tidak selalu bisa mengungkapkan semuanya dengan
+    kata-kata, tetapi ada banyak hal baik yang selalu ingin aku
+    doakan untukmu.
+   </p>
+   <p>With all my love, ❤️</p>
+  </div>
+  <a href="/letter.html" class="btn">Read Another Letter ♡</a>
+ </div>
+</section>
+
+<section class="love">
+ <p class="small">UNTIL THE END OF OUR STORY</p>
+ <h2>I Love You ❤️</h2>
+ <div class="line"></div>
+ <p>And I hope you never forget how special you are.</p>
+</section>
+
+<section class="guest-message" id="guest-message">
+ <div class="message-card">
+  <p class="small">A LITTLE MESSAGE FOR ME</p>
+  <h2>Your Words ♡</h2>
+  <div class="line"></div>
+  <p class="sub">Sebelum pergi, tinggalkan sedikit pesan untukku.</p>
+
+  <form id="messageForm">
+   <textarea id="message" maxlength="2000"
+    placeholder="Tulis pesanmu di sini... ❤️"
+    required></textarea>
+   <button class="send" id="sendButton" type="submit">
+    SEND YOUR MESSAGE ♡
+   </button>
+  </form>
+  <p id="messageStatus" aria-live="polite"></p>
+ </div>
+</section>
+</main>
+
+<footer>Made with love ❤️</footer>
 
 <script>
-const audio=document.getElementById('bgMusic');
-let playing=false;
+const form=document.getElementById("messageForm");
+const statusText=document.getElementById("messageStatus");
+const sendButton=document.getElementById("sendButton");
 
-function openGift(){
- document.getElementById('opening').style.display='none';
- document.getElementById('main').style.display='block';
- document.getElementById('main').classList.add('fade');
- document.getElementById('music').classList.remove('hidden');
- audio.play().then(()=>playing=true).catch(()=>{});
- window.scrollTo(0,0);
- confetti();
-}
-
-function toggleMusic(){
- if(playing){
-  audio.pause();
-  playing=false;
-  document.getElementById('music').textContent='♫';
- }else{
-  audio.play().then(()=>{
-   playing=true;
-   document.getElementById('music').textContent='Ⅱ';
-  }).catch(()=>{});
- }
-}
-
-function confetti(){
- const canvas=document.getElementById('confetti');
- const ctx=canvas.getContext('2d');
- canvas.width=window.innerWidth;
- canvas.height=window.innerHeight;
- let pieces=Array.from({length:100},()=>({
-  x:Math.random()*canvas.width,
-  y:-Math.random()*canvas.height,
-  s:Math.random()*5+3,
-  v:Math.random()*3+2,
-  a:Math.random()*6
- }));
- let frame=0;
- function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  pieces.forEach(p=>{
-   p.y+=p.v;
-   p.x+=Math.sin(p.a+frame/20);
-   ctx.fillStyle=['#d6b46a','#f4e4c1','#a84b62'][Math.floor(p.s)%3];
-   ctx.fillRect(p.x,p.y,p.s,p.s);
-  });
-  frame++;
-  if(frame<180)requestAnimationFrame(draw);
-  else ctx.clearRect(0,0,canvas.width,canvas.height);
- }
- draw();
-}
- // SEND MESSAGE
-document.getElementById("messageForm")
-.addEventListener("submit", async function(e){
-
+form.addEventListener("submit",async function(e){
  e.preventDefault();
 
- const name=document.getElementById("senderName");
- const message=document.getElementById("guestMessage");
- const status=document.getElementById("messageStatus");
- const button=this.querySelector("button");
+ const message=document.getElementById("message").value.trim();
 
- button.disabled=true;
- button.textContent="SENDING...";
- status.textContent="";
-
- try{
-
-  const response=await fetch("/api/messages",{
-   method:"POST",
-   headers:{
-    "Content-Type":"application/json"
-   },
-   body:JSON.stringify({
-    sender_name:name.value.trim(),
-    message:message.value.trim()
-   })
-  });
-
-  const result=await response.json();
-
-  if(response.ok && result.success){
-
-   status.textContent="Pesan berhasil dikirim. Terima kasih ♡";
-   status.style.color="#d6b46a";
-
-   name.value="";
-   message.value="";
-
-  }else{
-
-   throw new Error("Gagal mengirim pesan");
-
-  }
-
- }catch(error){
-
-  status.textContent="Pesan gagal dikirim. Coba lagi ya.";
-  status.style.color="#ff9da7";
-
+ if(!message){
+  statusText.textContent="Tulis pesanmu terlebih dahulu ya ❤️";
+  return;
  }
 
- button.disabled=false;
- button.textContent="SEND YOUR MESSAGE ♡";
+ sendButton.disabled=true;
+ sendButton.textContent="SENDING...";
 
+ try{
+  const response=await fetch("/api/messages",{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({message})
+  });
+
+  const data=await response.json();
+
+  if(!response.ok)throw new Error(data.error||"Gagal mengirim pesan");
+
+  statusText.textContent="Pesanmu berhasil dikirim. Terima kasih, sayang! ❤️";
+  form.reset();
+ }catch(error){
+  statusText.textContent="Pesan gagal dikirim. Silakan coba lagi.";
+ }finally{
+  sendButton.disabled=false;
+  sendButton.textContent="SEND YOUR MESSAGE ♡";
+ }
 });
 </script>
 </body>
