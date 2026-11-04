@@ -1,98 +1,84 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#300914">
-<title>A Secret For You</title>
+<title>For Someone Special ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100svh;
+ margin:0;min-height:100svh;padding:25px;
  display:flex;align-items:center;justify-content:center;
- padding:22px;text-align:center;
- color:#f4e4c1;background:
- radial-gradient(ellipse at center,#681d32,#300914 75%);
- font-family:Georgia,serif
+ background:radial-gradient(ellipse,#641d32,#300914 75%);
+ color:#f4e4c1;font-family:Montserrat,sans-serif;
 }
-.card{
- width:100%;max-width:400px;
- padding:48px 25px;border:1px solid #c9a65b;
- outline:1px solid #c9a65b55;outline-offset:7px
+.frame{
+ width:min(100%,430px);padding:45px 24px;
+ text-align:center;border:1px solid #d6b46a;
+ outline:1px solid #d6b46a55;outline-offset:8px;
 }
-.gold{color:#d6b46a}
-.small{font:10px Arial;letter-spacing:4px}
-h1{font-size:38px;font-weight:normal;margin:24px 0}
-.script{font-style:italic;color:#d6b46a}
-p{font:12px/2 Arial;color:#ead9bd}
+.small{font-size:10px;letter-spacing:5px;color:#d6b46a}
+.script{font-family:'Great Vibes',cursive;color:#d6b46a;font-size:36px}
+h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:42px;margin:20px 0}
+p{line-height:2}
 input{
- width:100%;padding:15px;margin-top:18px;
- background:#451321;border:1px solid #c9a65b;
- color:white;text-align:center;font-size:16px;
- outline:none
+ width:100%;padding:14px;margin-top:20px;
+ background:#f4e4c1;border:1px solid #d6b46a;
+ color:#300914;font-size:15px;outline:none;
 }
 button{
- width:100%;padding:15px;margin-top:17px;
- background:#d6b46a;color:#300914;
- border:0;letter-spacing:2px;font-weight:bold
+ width:100%;padding:15px;margin-top:18px;
+ border:0;background:#d6b46a;color:#300914;
+ letter-spacing:2px;font-size:11px;cursor:pointer;
 }
-#error{color:#ff9da7;min-height:20px}
+#error{font-size:12px;color:#ffb4b4;min-height:20px}
 </style>
 </head>
 <body>
-<div class="card">
- <div class="small gold">A PRIVATE INVITATION</div>
- <div style="font-size:55px;margin:25px">♛</div>
- <div class="script" style="font-size:28px">For My Love</div>
- <h1>Welcome, My Love</h1>
- <p> Ada kejutan kecil yang sudah aku siapkan<br>
- khusus untukmu. </p>
- <p class="gold">Masukkan password untuk membuka hadiahmu</p>
-
- <form id="login">
-  <input id="password" type="password"
-   placeholder="Enter your password"
-   autocomplete="current-password" required>
-  <button type="submit">UNLOCK MY SURPRISE ♡</button>
+<div class="frame">
+ <p class="small">A SPECIAL INVITATION</p>
+ <div style="font-size:60px;margin:25px">✉</div>
+ <p class="script">For My Love</p>
+ <h1>A Special Day</h1>
+ <div style="width:65px;height:1px;background:#d6b46a;margin:25px auto"></div>
+ <p style="font-size:11px">
+  Ada sesuatu yang ingin aku berikan<br>
+  khusus untuk seseorang yang istimewa.
+ </p>
+ <form id="loginForm">
+  <input id="password" type="password" placeholder="Enter secret password" required autocomplete="current-password">
+  <button type="submit" id="loginButton">BUKA KEJUTAN ♡</button>
  </form>
-
  <p id="error"></p>
- <p class="small gold">MADE WITH LOVE</p>
 </div>
-
 <script>
-document.getElementById("login").addEventListener("submit",
- async function(e){
-  e.preventDefault();
-  const button=this.querySelector("button");
-  const error=document.getElementById("error");
-  button.disabled=true;
-  button.textContent="CHECKING...";
-  error.textContent="";
-
-  try{
-   const response=await fetch("/api/login",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-     password:document.getElementById("password").value
-    })
-   });
-   const result=await response.json();
-
-   if(response.ok && result.success){
-    window.location.href="/surprise.html";
-   }else{
-    error.textContent="Password salah. Coba lagi ya ❤️";
-   }
-  }catch(err){
-   error.textContent="Koneksi bermasalah. Coba lagi.";
+document.getElementById('loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+ const button=document.getElementById('loginButton');
+ const error=document.getElementById('error');
+ button.disabled=true;
+ button.textContent='PLEASE WAIT...';
+ error.textContent='';
+ try{
+  const response=await fetch('/api/login',{
+   method:'POST',
+   headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({password:document.getElementById('password').value})
+  });
+  const data=await response.json();
+  if(response.ok&&data.success){
+   location.href='/surprise.html';
+  }else{
+   error.textContent='Password salah. Coba lagi ya ❤️';
   }
-
-  button.disabled=false;
-  button.textContent="UNLOCK MY SURPRISE ♡";
- });
+ }catch(err){
+  error.textContent='Koneksi bermasalah. Coba lagi.';
+ }
+ button.disabled=false;
+ button.textContent='BUKA KEJUTAN ♡';
+});
 </script>
 </body>
 </html>
