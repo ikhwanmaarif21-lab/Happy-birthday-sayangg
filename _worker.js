@@ -1,239 +1,96 @@
-
-const SESSION_DURATION = 8 * 60 * 60;
-const COOKIE_NAME = "birthday_session";
-
-async function createSignature(value, secret) {
-  const key = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
-
-  const signature = await crypto.subtle.sign(
-    "HMAC",
-    key,
-    new TextEncoder().encode(value)
-  );
-
-  return btoa(String.fromCharCode(...new Uint8Array(signature)))
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "");
-}
-
-async function checkSession(request, secret) {
-  const cookies = request.headers.get("Cookie") || "";
-  const match = cookies.match(/birthday_session=([^;]+)/);
-
-  if (!match) return false;
-
-  const parts = match[1].split(".");
-  if (parts.length !== 2) return false;
-
-  const timestamp = Number(parts[0]);
-  const now = Math.floor(Date.now() / 1000);
-
-  if (!Number.isSafeInteger(timestamp)) return false;
-  if (timestamp > now || now - timestamp > SESSION_DURATION) return false;
-
-  const expected = await createSignature(parts[0], secret);
-
-  if (expected.length !== parts[1].length) return false;
-
-  let difference = 0;
-  for (let i = 0; i < expected.length; i++) {
-    difference |= expected.charCodeAt(i) ^ parts[1].charCodeAt(i);
+function response(data,status=200,headers={}){
+ return new Response(JSON.stringify(data),{
+  status,
+  headers:{
+   "Content-Type":"application/json",
+   "Cache-Control":"no-store",
+   ...headers
   }
-
-  return difference === 0;
+ });
 }
 
-function json(data, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store"
-    }
-  });
+async function sign(value,password){
+ const key=await crypto.subtle.importKey(
+  "raw",
+  new TextEncoder().encode(password),
+  {name:"HMAC",hash:"SHA-256"},
+  false,
+  ["sign","verify"]
+ );
+ const signature=await crypto.subtle.sign(
+  "HMAC",key,new TextEncoder().encode(value)
+ );
+ return btoa(String.fromCharCode(...new Uint8Array(signature)))
+  .replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
 }
 
-async function readJSON(request) {
-  const length = Number(request.headers.get("Content-Length") || 0);
+function getCookie(request){
+ const cookies=request.headers.get("Cookie")||"";
+ const match=cookies.match(/(?:^|;\s*)birthday_session=([^;]+)/);
+ return match?match[1]:null;
+}
 
-  if (length > 10000) {
-    throw new Error("Request too large");
-  }
+async function validSession(request,password){
+ const token=getCookie(request);
+ if(!token)return false;
+ const parts=token.split(".");
+ if(parts.length!==2)return false;
 
-  return request.json();
+ try{
+  const expiry=atob(parts[0]);
+  if(!/^\d+$/.test(expiry)||Number(expiry)<Date.now())return false;
+  return (await sign(parts[0],password))===parts[1];
+ }catch(e){return false;}
 }
 
 export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
-    const path = url.pathname;
-    const method = request.method;
+ async fetch(request,env){
+  const url=new URL(request.url);
+  const path=url.pathname;
 
-    const password = env.BIRTHDAY_PASSWORD;
+  if(path==="/api/login"){
+   if(request.method!=="POST"){
+    return response({success:false},405);
+   }
 
-    if (!password || !env.DB || !env.ASSETS) {
-      return json({
-        error: "Server configuration is incomplete."
-      }, 500);
+   try{
+    const body=await request.json();
+    if(typeof body.password!=="string"||
+       body.password.length>200){
+     return response({success:false},400);
     }
 
-    // LOGIN
-    if (path === "/api/login" && method === "POST") {
-      try {
-        const body = await readJSON(request);
-
-        if (
-          typeof body.password !== "string" ||
-          body.password.length > 200 ||
-          body.password !== password
-        ) {
-          return json({
-            success: false,
-            error: "Incorrect password."
-          }, 401);
-        }
-
-        const timestamp = String(
-          Math.floor(Date.now() / 1000)
-        );
-
-        const signature = await createSignature(
-          timestamp,
-          password
-        );
-
-        const token = timestamp + "." + signature;
-
-        return new Response(
-          JSON.stringify({ success: true }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "Cache-Control": "no-store",
-              "Set-Cookie":
-                `${COOKIE_NAME}=${token}; Max-Age=${SESSION_DURATION}; Path=/; HttpOnly; Secure; SameSite=Lax`
-            }
-          }
-        );
-      } catch {
-        return json({
-          error: "Invalid login request."
-        }, 400);
-      }
+    if(body.password!==env.BIRTHDAY_PASSWORD){
+     return response({success:false},401);
     }
 
-    // LOGOUT
-    if (path === "/api/logout" && method === "POST") {
-      return new Response(
-        JSON.stringify({ success: true }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Set-Cookie":
-              `${COOKIE_NAME}=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Lax`
-          }
-        }
-      );
-    }
+    const expiry=String(Date.now()+8*60*60*1000);
+    const payload=btoa(expiry);
+    const signature=await sign(payload,env.BIRTHDAY_PASSWORD);
+    const token=payload+"."+signature;
 
-    // LOGIN PAGE IS PUBLIC
-    if (path === "/" || path === "/index.html") {
-      return env.ASSETS.fetch(request);
-    }
-
-    // CHECK LOGIN FOR PRIVATE PAGES AND API
-    const authenticated = await checkSession(request, password);
-
-    if (!authenticated) {
-      if (path.startsWith("/api/")) {
-        return json({
-          error: "Please login first."
-        }, 401);
-      }
-
-      if (
-        path === "/surprise.html" ||
-        path === "/letter.html" ||
-        path === "/inbox.html"
-      ) {
-        return Response.redirect(
-          new URL("/", request.url),
-          302
-        );
-      }
-    }
-
-    // SAVE MESSAGE
-    if (path === "/api/messages" && method === "POST") {
-      if (!authenticated) {
-        return json({ error: "Unauthorized." }, 401);
-      }
-
-      try {
-        const body = await readJSON(request);
-
-        const message =
-          typeof body.message === "string"
-            ? body.message.trim()
-            : "";
-
-        if (!message) {
-          return json({
-            error: "Message cannot be empty."
-          }, 400);
-        }
-
-        if (message.length > 2000) {
-          return json({
-            error: "Maximum message length is 2000 characters."
-          }, 400);
-        }
-
-        await env.DB.prepare(
-          "INSERT INTO messages (message) VALUES (?)"
-        ).bind(message).run();
-
-        return json({
-          success: true,
-          message: "Message saved successfully."
-        });
-      } catch {
-        return json({
-          error: "Failed to save message."
-        }, 500);
-      }
-    }
-
-    // GET MESSAGES
-    if (path === "/api/messages" && method === "GET") {
-      if (!authenticated) {
-        return json({ error: "Unauthorized." }, 401);
-      }
-
-      try {
-        const result = await env.DB.prepare(
-          "SELECT id, message, created_at FROM messages ORDER BY id DESC LIMIT 200"
-        ).all();
-
-        return json({
-          success: true,
-          messages: result.results || []
-        });
-      } catch {
-        return json({
-          error: "Failed to retrieve messages."
-        }, 500);
-      }
-    }
-
-    // STATIC ASSETS: PHOTOS, MUSIC, ETC.
-    return env.ASSETS.fetch(request);
+    return response({success:true},200,{
+     "Set-Cookie":
+      `birthday_session=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=28800`
+    });
+   }catch(e){
+    return response({success:false},400);
+   }
   }
+
+  // Halaman login boleh dibuka tanpa password
+  if(path==="/"||path==="/index.html"){
+   return env.ASSETS.fetch(request);
+  }
+
+  // Semua halaman dan file lainnya wajib login
+  if(!(await validSession(request,env.BIRTHDAY_PASSWORD))){
+   return new Response("Silakan login terlebih dahulu.",{
+    status:401,
+    headers:{"Content-Type":"text/plain"}
+   });
+  }
+
+  return env.ASSETS.fetch(request);
+ }
 };
