@@ -95,6 +95,122 @@ section{
 .fade{animation:appear 1.5s ease both}
 @keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
+
+
+/* LUXURY LOVE LETTER MESSAGE */
+.message-section{
+ background:radial-gradient(ellipse,#641d32,#300914 75%);
+ padding:100px 22px 110px;
+}
+
+.message-box{
+ max-width:480px;
+ margin:38px auto 0;
+ padding:35px 25px;
+ border:1px solid var(--gold);
+ outline:1px solid #d6b46a44;
+ outline-offset:7px;
+ background:linear-gradient(145deg,#3c1020,#300914);
+ box-shadow:0 15px 45px #0005;
+}
+
+.message-box .script{
+ font-size:39px;
+ color:var(--gold);
+ margin-bottom:12px;
+}
+
+.message-box .intro{
+ font-size:12px;
+ line-height:2;
+ color:var(--cream);
+ margin:12px 0 25px;
+}
+
+.message-box .field-label{
+ text-align:left;
+ display:block;
+ color:var(--gold);
+ font-size:10px;
+ letter-spacing:3px;
+ margin-bottom:10px;
+}
+
+.message-box textarea{
+ display:block;
+ width:100%;
+ min-height:155px;
+ resize:vertical;
+ padding:17px;
+ border:1px solid #d6b46a88;
+ background:#f4e4c1;
+ color:#300914;
+ font-family:'Cormorant Garamond',serif;
+ font-size:19px;
+ line-height:1.7;
+ outline:none;
+}
+
+.message-box textarea::placeholder{
+ color:#907c62;
+ font-style:italic;
+}
+
+.message-box textarea:focus{
+ border-color:var(--gold);
+ box-shadow:0 0 12px #d6b46a33;
+}
+
+.message-box .counter{
+ text-align:right;
+ font-size:10px;
+ color:#d6b46a;
+ margin-top:9px;
+}
+
+.message-box button{
+ width:100%;
+ background:var(--gold);
+ color:#300914;
+ border:0;
+ padding:16px;
+ margin-top:22px;
+ font-size:10px;
+ letter-spacing:3px;
+ transition:.3s;
+}
+
+.message-box button:hover{
+ background:#f0d18a;
+ transform:translateY(-2px);
+}
+
+.message-box button:disabled{
+ opacity:.6;
+ cursor:wait;
+}
+
+#messageStatus{
+ min-height:25px;
+ margin-top:17px;
+ font-size:12px;
+ line-height:1.8;
+ color:var(--cream);
+}
+
+.message-box .ending{
+ font-family:'Great Vibes',cursive;
+ font-size:25px;
+ color:var(--gold);
+ margin-top:20px;
+}
+
+@media(max-width:400px){
+ .message-box{padding:28px 18px}
+ .message-box .script{font-size:34px}
+}
+
+ 
 </style>
 </head>
 
