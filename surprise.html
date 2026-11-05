@@ -398,6 +398,66 @@ function confetti(){
  }
  draw();
 }
+
+ 
+// MESSAGE CHARACTER COUNTER
+const messageInput = document.getElementById("messageInput");
+const counter = document.getElementById("counter");
+
+messageInput.addEventListener("input", function () {
+  counter.textContent = this.value.length + " / 2000";
+});
+
+// SEND MESSAGE TO DATABASE
+document.getElementById("messageForm").addEventListener(
+  "submit",
+  async function (e) {
+    e.preventDefault();
+
+    const button = document.getElementById("sendButton");
+    const status = document.getElementById("messageStatus");
+    const message = messageInput.value.trim();
+
+    if (!message) {
+      status.textContent = "Tuliskan pesan terlebih dahulu ❤️";
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "SENDING...";
+    status.textContent = "Sedang mengirim pesan...";
+
+    try {
+      const result = await fetch("/api/messages", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: message
+        })
+      });
+
+      const data = await result.json();
+
+      if (!result.ok || !data.success) {
+        throw new Error(data.error || "Gagal mengirim pesan.");
+      }
+
+      status.textContent = "Pesan berhasil dikirim. Terima kasih ❤️";
+      messageInput.value = "";
+      counter.textContent = "0 / 2000";
+
+    } catch (error) {
+      status.textContent = error.message || "Koneksi bermasalah.";
+    } finally {
+      button.disabled = false;
+      button.textContent = "SEND WITH LOVE ♡";
+    }
+  }
+);
+
 </script>
 </body>
 </html>
