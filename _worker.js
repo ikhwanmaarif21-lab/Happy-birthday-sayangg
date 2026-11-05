@@ -91,6 +91,117 @@ export default {
    });
   }
 
-  return env.ASSETS.fetch(request);
- }
+
+   // SAVE MESSAGE
+
+    if (path === "/api/messages" && method === "POST") {
+
+      if (!authenticated) {
+
+        return json({ error: "Unauthorized." }, 401);
+
+      }
+
+      try {
+
+        const body = await readJSON(request);
+
+        const message =
+
+          typeof body.message === "string"
+
+            ? body.message.trim()
+
+            : "";
+
+        if (!message) {
+
+          return json({
+
+            error: "Message cannot be empty."
+
+          }, 400);
+
+        }
+
+        if (message.length > 2000) {
+
+          return json({
+
+            error: "Maximum message length is 2000 characters."
+
+          }, 400);
+
+        }
+
+        await env.DB.prepare(
+
+          "INSERT INTO messages (message) VALUES (?)"
+
+        ).bind(message).run();
+
+        return json({
+
+          success: true,
+
+          message: "Message saved successfully."
+
+        });
+
+      } catch {
+
+        return json({
+
+          error: "Failed to save message."
+
+        }, 500);
+
+      }
+
+    }
+
+    // GET MESSAGES
+
+    if (path === "/api/messages" && method === "GET") {
+
+      if (!authenticated) {
+
+        return json({ error: "Unauthorized." }, 401);
+
+      }
+
+      try {
+
+        const result = await env.DB.prepare(
+
+          "SELECT id, message, created_at FROM messages ORDER BY id DESC LIMIT 200"
+
+        ).all();
+
+        return json({
+
+          success: true,
+
+          messages: result.results || []
+
+        });
+
+      } catch {
+
+        return json({
+
+          error: "Failed to retrieve messages."
+
+        }, 500);
+
+      }
+
+    }
+
+    // STATIC ASSETS: PHOTOS, MUSIC, ETC.
+
+    return env.ASSETS.fetch(request);
+
+  }
+
 };
