@@ -183,6 +183,42 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
   <div class="heart">✦ ♡ ✦</div>
   <p class="footer">MADE WITH LOVE, JUST FOR YOU</p>
  </section>
+ 
+<!-- LUXURY LOVE LETTER MESSAGE -->
+<section class="message-section" id="guestMessage">
+ <p class="small">✧ A LITTLE MESSAGE FOR ME ✧</p>
+ <h2 class="script" style="font-size:48px;margin:22px 0">
+  Leave Me a Note
+ </h2>
+ <div class="line"></div>
+ <p style="font-size:12px;line-height:2">
+  Your words will always have a special place in my heart.
+ </p>
+ <div class="message-box">
+  <p class="script">A little note from you ♡</p>
+  <p class="intro">
+   Tidak perlu kata-kata yang sempurna.
+   Cukup tuliskan apa yang ingin kamu sampaikan.
+  </p>
+  <form id="messageForm">
+   <label class="field-label" for="messageInput">
+    YOUR MESSAGE ♡
+   </label>
+   <textarea
+    id="messageInput"
+    maxlength="2000"
+    placeholder="Write something from your heart..."
+    required
+   ></textarea>
+   <p class="counter" id="counter">0 / 2000</p>
+   <button type="submit" id="sendButton">
+    SEND WITH LOVE ♡
+   </button>
+  </form>
+  <p id="messageStatus" aria-live="polite"></p>
+  <p class="ending">Every little word means something. ♡</p>
+ </div>
+</section>
 </div>
 
 <audio id="bgMusic" loop>
