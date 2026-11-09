@@ -173,25 +173,28 @@ h1 {
 /* BACK BUTTON */
 
 .back-button {
- display: block;
- position: relative;
- z-index: 1;
- width: fit-content;
- margin: 45px auto 0;
- padding: 13px 27px;
- border: 1px solid var(--gold);
- border-radius: 40px;
- text-decoration: none;
- color: var(--maroon);
- font-size: 10px;
- letter-spacing: 2px;
- transition: .3s;
+  display: inline-block;
+  margin: 30px auto;
+  padding: 14px 30px;
+  border: 1px solid var(--gold);
+  outline: 1px solid #d6b46a44;
+  outline-offset: 4px;
+  background: linear-gradient(145deg, #3c1020, #300914);
+  color: var(--gold);
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-align: center;
+  box-shadow: 0 8px 25px #0005;
+  transition: all .3s ease;
 }
 
 .back-button:hover {
- background: var(--maroon);
- color: white;
- border-color: var(--maroon);
+  background: var(--gold);
+  color: #300914;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px #0006;
 }
 
 /* FOOTER */
@@ -369,9 +372,9 @@ h1 {
 
 <!-- BACK TO MAIN PAGE -->
 
-<button class="back-button" a href="surprise.html">
+<a href="surprise.html" class="back-button">
 ♡ BACK TO OUR STORY
-</button>
+</a>
 
 <footer class="footer">
  MADE WITH LOVE, JUST FOR YOU ♡
