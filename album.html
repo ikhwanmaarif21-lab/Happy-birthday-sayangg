@@ -23,15 +23,28 @@
 }
 
 body {
- margin: 0;
- min-height: 100vh;
- padding: 35px 18px 50px;
- background:
- radial-gradient(circle at 10% 10%, #ffffff 0, transparent 30%),
- linear-gradient(145deg, #fff5f7, #fce6ed, #fff0f5);
- color: var(--text);
- font-family: 'Montserrat', sans-serif;
- overflow-x: hidden;
+  background: #300914;
+  color: #f4e4c1;
+}
+
+.photo-card {
+  padding: 15px 15px 25px;
+  border: 1px solid var(--gold);
+  outline: 1px solid #d6b46a44;
+  outline-offset: 5px;
+  background: linear-gradient(145deg, #3c1020, #300914);
+  box-shadow: 0 15px 45px #0005;
+}
+
+.photo-card img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.photo-card p {
+  color: #f4e4c1;
+  text-align: center;
 }
 
 /* DECORATION */
