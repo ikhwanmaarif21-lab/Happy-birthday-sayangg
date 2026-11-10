@@ -68,16 +68,19 @@ body {
   background: rgba(255,255,255,0.025);
 }
 
+
 /* KEDUA TOMBOL */
 #buttonA,
 #buttonB {
   position: absolute;
-  top: 42px;
+  top: 35px;
 
-  padding: 17px 28px;
+  padding: 13px 24px;
   border-radius: 50px;
-  font-size: 25px;
+
+  font-size: 16px;
   font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
 
   white-space: nowrap;
   cursor: pointer;
@@ -85,17 +88,19 @@ body {
   transition: left 0.2s ease, top 0.2s ease;
 }
 
-/* TIDAK MAU */
+/* TIDAK MAU - SEBELAH KANAN */
 #buttonA {
-  left: 35%;
+  left: 56%;
+
   background: var(--gold);
   color: var(--maroon);
   border: 1px solid var(--gold);
 }
 
-/* MAU */
+/* MAU - SEBELAH KIRI */
 #buttonB {
-  left: 56%;
+  left: 12%;
+
   background: var(--gold);
   color: var(--maroon);
   border: 1px solid var(--gold);
@@ -103,9 +108,13 @@ body {
 
 /* IPHONE */
 @media (max-width: 480px) {
-  .button-container h2 {
-    font-size: 36px;
+  #buttonA,
+  #buttonB {
+    font-size: 14px;
+    padding: 13px 19px;
   }
+}
+
 
   #buttonA,
   #buttonB {
