@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Love ❤️</title>
+
+  <style>
+    .button-container {
+  text-align: center;
+  margin: 50px auto;
+  padding: 30px 20px;
+  max-width: 480px;
+  color: var(--cream);
+}
+
+.button-container h2 {
+  color: var(--gold);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+}
+
+.button-container p {
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.button-area {
+  position: relative;
+  height: 180px;
+  border: 1px solid var(--gold);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+#buttonA,
+#buttonB {
+  position: absolute;
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: left 0.2s ease, top 0.2s ease;
+}
+
+#buttonA {
+  background: var(--maroon);
+  color: var(--cream);
+  border: 1px solid var(--gold);
+  left: 15px;
+  top: 15px;
+}
+
+#buttonB {
+  background: var(--gold);
+  color: var(--maroon);
+  border: none;
+  right: 15px;
+  bottom: 15px;
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- HTML TOMBOL -->
+  <div class="button-container">
+    <h2>Do You Love Me? ❤️</h2>
+
+    <div class="button-area">
+      <button id="buttonA">TIDAK MAU 🙈</button>
+      <button id="buttonB">MAU ❤️</button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT DI SINI -->
+  <script>
+  const buttonA = document.getElementById("buttonA");
+const buttonB = document.getElementById("buttonB");
+const buttonArea = document.querySelector(".button-area");
+
+// Tombol A berpindah tempat
+buttonA.addEventListener("click", function() {
+
+  const maxX = buttonArea.clientWidth - buttonA.offsetWidth;
+  const maxY = buttonArea.clientHeight - buttonA.offsetHeight;
+
+  const randomX = Math.random() * maxX;
+  const randomY = Math.random() * maxY;
+
+  buttonA.style.left = randomX + "px";
+  buttonA.style.top = randomY + "px";
+
+});
+
+// Tombol B membuka surprise.html
+buttonB.addEventListener("click", function() {
+  window.location.href = "surprise.html";
+});
+  </script>
+
+</body>
+</html>
