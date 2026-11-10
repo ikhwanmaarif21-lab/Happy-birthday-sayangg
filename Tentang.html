@@ -24,47 +24,45 @@ body {
   overflow-x: hidden;
 }
 
-/* BUTTON CONTAINER */
+
+/* CONTAINER UTAMA */
 .button-container {
-  text-align: center;
   width: 100%;
-  max-width: 520px;
   min-height: 100vh;
-  margin: 0 auto;
-  padding: 25px 22px;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 25px 0 0;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 
+  text-align: center;
   color: var(--cream);
 }
 
 /* JUDUL */
 .button-container h2 {
+  width: 100%;
   color: var(--gold);
   font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
-  margin-bottom: 12px;
+  font-size: 42px;
+  margin-bottom: 25px;
 }
 
-.button-container p {
-  font-size: 14px;
-  margin-bottom: 30px;
-  line-height: 1.8;
-}
-
-
-/* AREA TOMBOL */
+/* AREA TOMBOL FULL SCREEN */
 .button-area {
   position: relative;
-  width: calc(100vw - 32px);
-  max-width: 600px;
-  height: 360px;
+  width: 100%;
+  height: calc(100dvh - 120px);
+  min-height: 500px;
 
-  border: 1px solid var(--gold);
-  border-radius: 22px;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  border-left: none;
+  border-right: none;
+
+  border-radius: 0;
   overflow: hidden;
 
   background: rgba(255,255,255,0.025);
@@ -74,24 +72,22 @@ body {
 #buttonA,
 #buttonB {
   position: absolute;
-  top: 20px;
+  top: 32px;
 
-  padding: 16px 28px;
-  border-radius: 35px;
-  font-size: 14px;
+  padding: 17px 28px;
+  border-radius: 40px;
+  font-size: 16px;
   font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
 
-  cursor: pointer;
   white-space: nowrap;
+  cursor: pointer;
 
   transition: left 0.2s ease, top 0.2s ease;
 }
 
 /* TIDAK MAU */
 #buttonA {
-  left: calc(50% - 155px);
-
+  left: 8%;
   background: transparent;
   color: var(--cream);
   border: 1px solid var(--gold);
@@ -99,22 +95,22 @@ body {
 
 /* MAU */
 #buttonB {
-  left: calc(50% + 15px);
-
+  left: 56%;
   background: var(--gold);
   color: var(--maroon);
   border: 1px solid var(--gold);
 }
 
-
-/* RESPONSIVE IPHONE */
+/* IPHONE */
 @media (max-width: 480px) {
   .button-container h2 {
-    font-size: 29px;
+    font-size: 36px;
   }
 
-  .button-area {
-    height: 220px;
+  #buttonA,
+  #buttonB {
+    font-size: 13px;
+    padding: 15px 20px;
   }
 }
 
