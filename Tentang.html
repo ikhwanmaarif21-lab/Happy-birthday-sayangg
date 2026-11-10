@@ -55,50 +55,57 @@ body {
   line-height: 1.8;
 }
 
+
 /* AREA TOMBOL */
 .button-area {
   position: relative;
-  width: 100%;
-  max-width: 440px;
-  height: 240px;
+  width: calc(100vw - 32px);
+  max-width: 600px;
+  height: 360px;
 
   border: 1px solid var(--gold);
-  border-radius: 18px;
+  border-radius: 22px;
+  overflow: hidden;
 
   background: rgba(255,255,255,0.025);
-  overflow: hidden;
 }
 
 /* KEDUA TOMBOL */
 #buttonA,
 #buttonB {
   position: absolute;
-  padding: 13px 23px;
-  border-radius: 30px;
-  font-size: 13px;
+  top: 20px;
+
+  padding: 16px 28px;
+  border-radius: 35px;
+  font-size: 14px;
   font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+
   cursor: pointer;
   white-space: nowrap;
+
   transition: left 0.2s ease, top 0.2s ease;
 }
 
-/* TOMBOL TIDAK MAU */
+/* TIDAK MAU */
 #buttonA {
-  background: var(--maroon);
+  left: calc(50% - 155px);
+
+  background: transparent;
   color: var(--cream);
   border: 1px solid var(--gold);
-  left: 15px;
-  top: 15px;
 }
 
-/* TOMBOL MAU */
+/* MAU */
 #buttonB {
+  left: calc(50% + 15px);
+
   background: var(--gold);
   color: var(--maroon);
-  border: none;
-  right: 15px;
-  bottom: 15px;
+  border: 1px solid var(--gold);
 }
+
 
 /* RESPONSIVE IPHONE */
 @media (max-width: 480px) {
