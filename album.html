@@ -419,6 +419,8 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
  const audio=document.getElementById('bgMusic');
 let playing=false;
 
+ document.getElementById('music').classList.remove('hidden');
+
 function showPhoto(element) {
 
  const img = element.querySelector('img');
