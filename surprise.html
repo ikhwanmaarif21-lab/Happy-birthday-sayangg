@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -10,20 +11,34 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+ --gold:#d6b46a;
+ --cream:#f4e4c1;
+ --maroon:#300914;
+}
+
 body{
  background:#300914;
  color:#f4e4c1;
  font-family:'Montserrat',sans-serif;
  overflow-x:hidden;
 }
-:root{--gold:#d6b46a;--cream:#f4e4c1;--maroon:#300914}
+
 button{cursor:pointer;font-family:inherit}
+
+/* OPENING */
+
 #opening{
  min-height:100svh;
- display:flex;align-items:center;justify-content:center;
- text-align:center;padding:25px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ padding:25px;
  background:radial-gradient(ellipse,#641d32,#300914 75%);
 }
+
 .frame{
  border:1px solid var(--gold);
  outline:1px solid #d6b46a55;
@@ -31,73 +46,126 @@ button{cursor:pointer;font-family:inherit}
  padding:45px 24px;
  width:min(100%,430px);
 }
-.small{letter-spacing:5px;font-size:10px;color:var(--gold)}
-.script{font-family:'Great Vibes',cursive;color:var(--gold)}
-h1{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:400;margin:22px 0}
+
+.small{
+ letter-spacing:5px;
+ font-size:10px;
+ color:var(--gold);
+}
+
+.script{
+ font-family:'Great Vibes',cursive;
+ color:var(--gold);
+}
+
+h1{
+ font-family:'Cormorant Garamond',serif;
+ font-size:42px;
+ font-weight:400;
+ margin:22px 0;
+}
+
 .envelope{
- font-size:65px;margin:25px 0;
+ font-size:65px;
+ margin:25px 0;
  animation:float 2.5s ease-in-out infinite;
 }
-@keyframes float{50%{transform:translateY(-10px)}}
+
+@keyframes float{
+ 50%{transform:translateY(-10px)}
+}
+
 .gold-btn{
- background:var(--gold);color:#32101b;border:0;
- padding:14px 30px;letter-spacing:2px;
- font-size:11px;margin-top:25px;
+ display:inline-block;
+ background:var(--gold);
+ color:#32101b;
+ border:0;
+ padding:14px 30px;
+ letter-spacing:2px;
+ font-size:11px;
+ margin-top:25px;
+ text-decoration:none;
  transition:.3s;
 }
+
 .gold-btn:hover{transform:scale(1.05)}
+
+/* MAIN SURPRISE */
+
 #main{display:none}
+
 section{
- padding:90px 22px;text-align:center;
+ padding:90px 22px;
+ text-align:center;
  position:relative;
 }
+
 .hero{
- min-height:90svh;display:flex;flex-direction:column;
- justify-content:center;align-items:center;
+ min-height:90svh;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
  background:linear-gradient(#300914cc,#300914ee),url('photo1.jpg') center/cover;
 }
-.hero h2{font-size:clamp(48px,12vw,76px);line-height:1.1;margin:25px 0}
-.hero p{font-size:12px;letter-spacing:3px}
-.line{width:65px;height:1px;background:var(--gold);margin:25px auto}
+
+.hero h2{
+ font-size:clamp(48px,12vw,76px);
+ line-height:1.1;
+ margin:25px 0;
+}
+
+.hero p{
+ font-size:12px;
+ letter-spacing:3px;
+}
+
+.line{
+ width:65px;
+ height:1px;
+ background:var(--gold);
+ margin:25px auto;
+}
+
 .section-title{
  font-family:'Cormorant Garamond',serif;
- font-size:38px;font-weight:400;color:var(--gold);
+ font-size:38px;
+ font-weight:400;
+ color:var(--gold);
  margin-bottom:20px;
 }
+
 .message{
- max-width:570px;margin:auto;
+ max-width:570px;
+ margin:auto;
  font-family:'Cormorant Garamond',serif;
- font-size:21px;line-height:1.9;color:var(--cream);
+ font-size:21px;
+ line-height:1.9;
+ color:var(--cream);
 }
-.heart{color:var(--gold);font-size:25px;margin:20px}
-.gallery{
- display:grid;grid-template-columns:1fr 1fr;
- gap:12px;max-width:550px;margin:35px auto;
+
+.heart{
+ color:var(--gold);
+ font-size:25px;
+ margin:20px;
 }
-.gallery img{
- width:100%;height:210px;object-fit:cover;
- border:1px solid var(--gold);padding:4px;
-}
-.gallery img:first-child{grid-column:span 2;height:270px}
+
 .final{
  background:radial-gradient(ellipse,#641d32,#300914 75%);
  min-height:75svh;
- display:flex;flex-direction:column;justify-content:center;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
 }
-.footer{font-size:10px;letter-spacing:3px;color:var(--gold)}
-#music{
- position:fixed;right:18px;bottom:18px;
- background:var(--gold);color:#300914;
- border:0;border-radius:50%;width:45px;height:45px;
- font-size:19px;z-index:10;
+
+.footer{
+ font-size:10px;
+ letter-spacing:3px;
+ color:var(--gold);
 }
-.hidden{display:none}
-.fade{animation:appear 1.5s ease both}
-@keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
 
+/* MESSAGE FORM */
 
-/* LUXURY LOVE LETTER MESSAGE */
 .message-section{
  background:radial-gradient(ellipse,#641d32,#300914 75%);
  padding:100px 22px 110px;
@@ -210,11 +278,294 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
  .message-box .script{font-size:34px}
 }
 
- 
+/* MUSIC BUTTON */
+
+#music{
+ position:fixed;
+ right:18px;
+ bottom:18px;
+ background:var(--gold);
+ color:#300914;
+ border:0;
+ border-radius:50%;
+ width:45px;
+ height:45px;
+ font-size:19px;
+ z-index:30;
+}
+
+.hidden{display:none!important}
+
+.fade{animation:appear 1.5s ease both}
+
+@keyframes appear{
+ from{opacity:0;transform:translateY(20px)}
+ to{opacity:1;transform:translateY(0)}
+}
+
+canvas{
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ z-index:20;
+}
+
+/* =================================
+   ALBUM PAGE - SINGLE DOCUMENT
+================================= */
+
+#albumPage{
+ display:none;
+ position:relative;
+ min-height:100svh;
+ background:#300914;
+ color:#f4e4c1;
+ padding:45px 22px 35px;
+ overflow:hidden;
+}
+
+#albumPage .decor{
+ position:fixed;
+ pointer-events:none;
+ color:#d99aae;
+ opacity:.35;
+ z-index:0;
+}
+
+#albumPage .decor.one{
+ top:12%;
+ left:5%;
+ font-size:30px;
+}
+
+#albumPage .decor.two{
+ top:35%;
+ right:6%;
+ font-size:25px;
+}
+
+#albumPage .decor.three{
+ bottom:12%;
+ left:8%;
+ font-size:22px;
+}
+
+#albumPage .album-header{
+ position:relative;
+ z-index:1;
+ text-align:center;
+ max-width:650px;
+ margin:0 auto 35px;
+}
+
+#albumPage .eyebrow{
+ font-size:10px;
+ letter-spacing:4px;
+ color:#b77b91;
+}
+
+#albumPage h1{
+ font-family:'Great Vibes',cursive;
+ font-size:clamp(43px,10vw,65px);
+ font-weight:normal;
+ color:var(--gold);
+ margin:15px 0 5px;
+}
+
+#albumPage .subtitle{
+ font-family:'Cormorant Garamond',serif;
+ font-size:19px;
+ font-style:italic;
+ color:#a36d82;
+}
+
+#albumPage .divider{
+ width:75px;
+ height:1px;
+ background:var(--gold);
+ margin:22px auto;
+}
+
+#albumPage .description{
+ font-size:11px;
+ line-height:2;
+ letter-spacing:1px;
+}
+
+/* ALBUM GRID */
+
+#albumPage .album{
+ position:relative;
+ z-index:1;
+ max-width:680px;
+ margin:35px auto;
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:25px 18px;
+}
+
+#albumPage .polaroid{
+ background:#fffdfc;
+ padding:10px 10px 17px;
+ box-shadow:0 7px 20px #66304418;
+ border:1px solid #f5e8e9;
+ transition:transform .35s,box-shadow .35s;
+ cursor:pointer;
+}
+
+#albumPage .polaroid:nth-child(odd){
+ transform:rotate(-2deg);
+}
+
+#albumPage .polaroid:nth-child(even){
+ transform:rotate(2deg);
+}
+
+#albumPage .polaroid:hover{
+ transform:translateY(-6px) rotate(0deg);
+ box-shadow:0 12px 25px #66304425;
+}
+
+#albumPage .polaroid img{
+ display:block;
+ width:100%;
+ height:185px;
+ object-fit:cover;
+ background:#f7e6eb;
+}
+
+#albumPage .caption{
+ text-align:center;
+ font-family:'Great Vibes',cursive;
+ font-size:22px;
+ color:var(--maroon);
+ margin:13px 0 0;
+}
+
+#albumPage .number{
+ text-align:center;
+ font-size:8px;
+ letter-spacing:2px;
+ color:#bc92a0;
+ margin-top:5px;
+}
+
+/* BACK BUTTON */
+
+#albumPage .back-button{
+ display:block;
+ width:max-content;
+ max-width:100%;
+ margin:45px auto 30px;
+ padding:14px 30px;
+ border:1px solid var(--gold);
+ outline:1px solid #d6b46a44;
+ outline-offset:4px;
+ background:linear-gradient(145deg,#32101b,#300914);
+ color:var(--gold);
+ text-decoration:none;
+ font-family:'Montserrat',sans-serif;
+ font-size:10px;
+ letter-spacing:2px;
+ text-align:center;
+ box-shadow:0 8px 25px #0005;
+ transition:all .3s ease;
+}
+
+#albumPage .back-button:hover{
+ background:var(--gold);
+ color:#300914;
+ transform:translateY(-3px);
+ box-shadow:0 12px 30px #0006;
+}
+
+/* ALBUM FOOTER */
+
+#albumPage .album-footer{
+ position:relative;
+ z-index:1;
+ margin-top:40px;
+ text-align:center;
+ font-size:9px;
+ letter-spacing:3px;
+ color:#b58b9a;
+}
+
+/* PHOTO VIEWER */
+
+#albumPage .viewer{
+ display:none;
+ position:fixed;
+ inset:0;
+ z-index:99;
+ background:rgba(35,9,22,.94);
+ align-items:center;
+ justify-content:center;
+ padding:25px;
+}
+
+#albumPage .viewer.active{
+ display:flex;
+ animation:albumAppear .3s ease;
+}
+
+@keyframes albumAppear{
+ from{opacity:0}
+ to{opacity:1}
+}
+
+#albumPage .viewer img{
+ max-width:100%;
+ max-height:82vh;
+ object-fit:contain;
+ border:8px solid white;
+ box-shadow:0 10px 40px #0005;
+}
+
+#albumPage .close{
+ position:absolute;
+ top:15px;
+ right:22px;
+ color:white;
+ background:none;
+ border:none;
+ font-size:35px;
+ cursor:pointer;
+}
+
+#albumPage .viewer-caption{
+ position:absolute;
+ bottom:18px;
+ color:white;
+ font-family:'Great Vibes',cursive;
+ font-size:25px;
+ text-align:center;
+ width:90%;
+}
+
+@media(max-width:380px){
+ #albumPage .album{
+  gap:17px 12px;
+ }
+
+ #albumPage .polaroid{
+  padding:7px 7px 13px;
+ }
+
+ #albumPage .polaroid img{
+  height:145px;
+ }
+
+ #albumPage .caption{
+  font-size:19px;
+ }
+}
 </style>
 </head>
 
 <body>
+
+<!-- OPENING -->
 
 <div id="opening">
  <div class="frame">
@@ -231,7 +582,10 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
  </div>
 </div>
 
+<!-- MAIN SURPRISE -->
+
 <div id="main">
+
  <section class="hero">
   <p class="small">TODAY IS ALL ABOUT YOU</p>
   <h2 class="script">Happy Birthday</h2>
@@ -245,6 +599,7 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
   <p class="small">A LETTER FROM MY HEART</p>
   <h2 class="section-title">Untuk Kamu</h2>
   <div class="line"></div>
+
   <div class="message">
    Selamat ulang tahun, sayangku. ❤️
    <br><br>
@@ -272,26 +627,30 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
   <p class="small">OUR LITTLE UNIVERSE</p>
   <h2 class="section-title">Beautiful Memories</h2>
   <div class="line"></div>
+
   <div class="frame">
    <p style="font-size:12px;line-height:2">
-   kalo ini foto ade yang mas suka <br>
+    kalo ini foto ade yang mas suka <br>
     jadi pengen nyubit pipinyaa😭
-  </p>
+   </p>
+
    <br>
- <a href="album.html" class="gold-btn"
-   onclick="sessionStorage.setItem('albumMusic', 'on')">
-  ♡ OUR LITTLE MEMORIES
-</a>
+
+   <button type="button" class="gold-btn" onclick="showAlbum()">
+    ♡ OUR LITTLE MEMORIES
+   </button>
   </div>
- 
  </section>
 
  <section class="final">
   <p class="small">ONE LAST THING</p>
+
   <h2 class="script" style="font-size:55px;margin:25px 0">
    I Love You
   </h2>
+
   <div class="line"></div>
+
   <div class="message">
    Dunia mungkin begitu luas,
    tetapi aku selalu bersyukur
@@ -300,184 +659,545 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
    <br><br>
    Happy Birthday, my favorite person. ❤️
   </div>
+
   <div class="heart">✦ ♡ ✦</div>
   <p class="footer">MADE WITH LOVE, JUST FOR YOU</p>
  </section>
- 
-<!-- LUXURY LOVE LETTER MESSAGE -->
-<section class="message-section" id="guestMessage">
- <p class="small">✧ A LITTLE MESSAGE FOR ME ✧</p>
- <h2 class="script" style="font-size:48px;margin:22px 0">
-  Leave Me a Note
- </h2>
- <div class="line"></div>
- <p style="font-size:12px;line-height:2">
-  Your words will always have a special place in my heart.
- </p>
- <div class="message-box">
-  <p class="script">A little note from you ♡</p>
-  <p class="intro">
-   Tidak perlu kata-kata yang sempurna.
-   Cukup tuliskan apa yang ingin kamu sampaikan.
+
+ <!-- MESSAGE FORM -->
+
+ <section class="message-section" id="guestMessage">
+  <p class="small">✧ A LITTLE MESSAGE FOR ME ✧</p>
+
+  <h2 class="script" style="font-size:48px;margin:22px 0">
+   Leave Me a Note
+  </h2>
+
+  <div class="line"></div>
+
+  <p style="font-size:12px;line-height:2">
+   Your words will always have a special place in my heart.
   </p>
-  <form id="messageForm">
-   <label class="field-label" for="messageInput">
-    YOUR MESSAGE ♡
-   </label>
-   <textarea
-    id="messageInput"
-    maxlength="2000"
-    placeholder="Write something from your heart..."
-    required
-   ></textarea>
-   <p class="counter" id="counter">0 / 2000</p>
-   <button type="submit" id="sendButton">
-    SEND WITH LOVE ♡
-   </button>
-  </form>
-  <p id="messageStatus" aria-live="polite"></p>
-  <p class="ending">Every little word means something. ♡</p>
- </div>
-</section>
- 
-  <section>
+
+  <div class="message-box">
+   <p class="script">A little note from you ♡</p>
+
+   <p class="intro">
+    Tidak perlu kata-kata yang sempurna.
+    Cukup tuliskan apa yang ingin kamu sampaikan.
+   </p>
+
+   <form id="messageForm">
+    <label class="field-label" for="messageInput">
+     YOUR MESSAGE ♡
+    </label>
+
+    <textarea
+     id="messageInput"
+     maxlength="2000"
+     placeholder="Write something from your heart..."
+     required
+    ></textarea>
+
+    <p class="counter" id="counter">0 / 2000</p>
+
+    <button type="submit" id="sendButton">
+     SEND WITH LOVE ♡
+    </button>
+   </form>
+
+   <p id="messageStatus" aria-live="polite"></p>
+   <p class="ending">Every little word means something. ♡</p>
+  </div>
+ </section>
+
+ <section>
   <p class="small">SEDIKIT CURHAT😭</p>
   <h2 class="section-title">Tentang perasaan mas ke ade❤️</h2>
   <div class="line"></div>
+
   <div class="frame">
    <p style="font-size:12px;line-height:2">
-   ❤️❤️❤️ <br>
+    ❤️❤️❤️
+   </p>
 
-  </p>
    <br>
-    <a href="Tentang.html" class="gold-btn">
- PENCET INI SAYANGKUU ♡
-</a>
+
+   <a href="Tentang.html" class="gold-btn">
+    PENCET INI SAYANGKUU ♡
+   </a>
   </div>
-  </section>
+ </section>
+
 </div>
 
-<audio id="bgMusic" loop>
+<!-- =================================
+     ALBUM PAGE
+================================= -->
+
+<div id="albumPage">
+
+ <div class="decor one">♡</div>
+ <div class="decor two">✧</div>
+ <div class="decor three">♡</div>
+
+ <header class="album-header">
+  <p class="eyebrow">OUR LITTLE UNIVERSE</p>
+
+  <h1>Our Little Memories</h1>
+
+  <p class="subtitle">
+   Every picture tells our story ♡
+  </p>
+
+  <div class="divider"></div>
+
+  <p class="description">
+   Beberapa momen sederhana yang menjadi
+   kenangan paling indah dalam hidupku.
+  </p>
+ </header>
+
+ <!-- PHOTO ALBUM -->
+
+ <main class="album">
+
+  <div class="polaroid" onclick="showPhoto(this)">
+   <img src="/foto/Foto1.JPG" alt="Our first memory">
+   <p class="caption">Beautiful Moment</p>
+   <p class="number">MEMORY NO. 01</p>
+  </div>
+
+  <div class="polaroid" onclick="showPhoto(this)">
+   <img src="/foto/Foto2.JPG" alt="Our special moment">
+   <p class="caption">My Favorite Day</p>
+   <p class="number">MEMORY NO. 02</p>
+  </div>
+
+  <div class="polaroid" onclick="showPhoto(this)">
+   <img src="/foto/Foto3.JPG" alt="Our memories">
+   <p class="caption">Sweet Memories</p>
+   <p class="number">MEMORY NO. 03</p>
+  </div>
+
+  <div class="polaroid" onclick="showPhoto(this)">
+   <img src="/foto/Foto4.JPG" alt="My favorite person">
+   <p class="caption">My Favorite Person</p>
+   <p class="number">MEMORY NO. 04</p>
+  </div>
+
+ </main>
+
+ <!-- BACK BUTTON -->
+
+ <button type="button" class="back-button" onclick="showSurprise()">
+  ♡ BACK TO OUR STORY
+ </button>
+
+ <footer class="album-footer">
+  MADE WITH LOVE, JUST FOR YOU ♡
+ </footer>
+
+ <!-- FULLSCREEN PHOTO -->
+
+ <div class="viewer" id="viewer" onclick="closePhoto(event)">
+
+  <button class="close" onclick="closePhoto(event)">×</button>
+
+  <img id="bigPhoto" src="" alt="Enlarged memory">
+
+  <p class="viewer-caption" id="bigCaption"></p>
+
+ </div>
+
+</div>
+
+<!-- TWO SEPARATE MUSIC FILES -->
+
+<audio id="bgMusic" loop preload="auto">
  <source src="/music/music.mp3" type="audio/mpeg">
 </audio>
 
+<audio id="albumAudio" loop preload="auto">
+ <source src="/music/musicalbum.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ONE SHARED MUSIC BUTTON -->
+
 <button id="music" class="hidden" onclick="toggleMusic()">♫</button>
+
 <canvas id="confetti"></canvas>
 
 <script>
-const audio=document.getElementById('bgMusic');
-let playing=false;
+
+/* =================================
+   MUSIC SYSTEM
+================================= */
+
+const surpriseAudio = document.getElementById('bgMusic');
+const albumAudio = document.getElementById('albumAudio');
+const musicButton = document.getElementById('music');
+
+let currentPage = 'surprise';
+let playing = false;
+
+let surpriseWasPlaying = false;
+let surpriseSavedTime = 0;
+
+
+/* OPEN SURPRISE */
 
 function openGift(){
- document.getElementById('opening').style.display='none';
- document.getElementById('main').style.display='block';
+
+ document.getElementById('opening').style.display = 'none';
+
+ document.getElementById('main').style.display = 'block';
+
  document.getElementById('main').classList.add('fade');
- document.getElementById('music').classList.remove('hidden');
- audio.play().then(()=>playing=true).catch(()=>{});
+
+ musicButton.classList.remove('hidden');
+
+ currentPage = 'surprise';
+
+ surpriseAudio.play()
+  .then(()=>{
+   playing = true;
+   updateMusicButton();
+  })
+  .catch(()=>{
+   playing = false;
+   updateMusicButton();
+  });
+
  window.scrollTo(0,0);
+
  confetti();
 }
 
-function toggleMusic(){
- if(playing){
-  audio.pause();
-  playing=false;
-  document.getElementById('music').textContent='♫';
- }else{
-  audio.play().then(()=>{
-   playing=true;
-   document.getElementById('music').textContent='Ⅱ';
-  }).catch(()=>{});
- }
+
+/* OPEN ALBUM WITHOUT RELOAD */
+
+function showAlbum(){
+
+ // Simpan posisi dan status musik surprise
+ surpriseWasPlaying = !surpriseAudio.paused;
+ surpriseSavedTime = surpriseAudio.currentTime;
+
+ // Hentikan musik surprise
+ surpriseAudio.pause();
+
+ // Pindahkan tampilan
+ document.getElementById('main').style.display = 'none';
+ document.getElementById('albumPage').style.display = 'block';
+
+ currentPage = 'album';
+
+ musicButton.classList.remove('hidden');
+
+ window.scrollTo(0,0);
+
+ // Langsung mulai musik album dari klik tombol
+ albumAudio.currentTime = 0;
+
+ albumAudio.play()
+  .then(()=>{
+   playing = true;
+   updateMusicButton();
+  })
+  .catch((error)=>{
+   playing = false;
+   updateMusicButton();
+   console.log('Musik album gagal diputar:',error);
+  });
+
 }
 
+
+/* BACK TO SURPRISE WITHOUT RELOAD */
+
+function showSurprise(){
+
+ // Tutup photo viewer jika terbuka
+ document.getElementById('viewer').classList.remove('active');
+
+ document.body.style.overflow = '';
+
+ // Hentikan musik album
+ albumAudio.pause();
+ albumAudio.currentTime = 0;
+
+ // Kembalikan halaman surprise
+ document.getElementById('albumPage').style.display = 'none';
+ document.getElementById('main').style.display = 'block';
+
+ currentPage = 'surprise';
+
+ window.scrollTo(0,0);
+
+ // Kembalikan musik surprise jika sebelumnya sedang bermain
+ if(surpriseWasPlaying){
+
+  surpriseAudio.currentTime = surpriseSavedTime;
+
+  surpriseAudio.play()
+   .then(()=>{
+    playing = true;
+    updateMusicButton();
+   })
+   .catch(()=>{
+    playing = false;
+    updateMusicButton();
+   });
+
+ }else{
+
+  playing = false;
+  updateMusicButton();
+
+ }
+
+}
+
+
+/* MUSIC BUTTON */
+
+function getCurrentAudio(){
+ return currentPage === 'album' ? albumAudio : surpriseAudio;
+}
+
+function updateMusicButton(){
+
+ const audio = getCurrentAudio();
+
+ musicButton.textContent = audio.paused ? '♫' : 'Ⅱ';
+
+}
+
+function toggleMusic(){
+
+ const audio = getCurrentAudio();
+
+ if(audio.paused){
+
+  audio.play()
+   .then(()=>{
+    playing = true;
+    updateMusicButton();
+   })
+   .catch(()=>{
+    playing = false;
+    updateMusicButton();
+   });
+
+ }else{
+
+  audio.pause();
+
+  playing = false;
+
+  updateMusicButton();
+
+ }
+
+}
+
+
+/* UPDATE BUTTON IF AUDIO CHANGES */
+
+surpriseAudio.addEventListener('play',updateMusicButton);
+surpriseAudio.addEventListener('pause',updateMusicButton);
+
+albumAudio.addEventListener('play',updateMusicButton);
+albumAudio.addEventListener('pause',updateMusicButton);
+
+
+/* =================================
+   CONFETTI
+================================= */
+
 function confetti(){
- const canvas=document.getElementById('confetti');
- const ctx=canvas.getContext('2d');
- canvas.width=window.innerWidth;
- canvas.height=window.innerHeight;
- let pieces=Array.from({length:100},()=>({
+
+ const canvas = document.getElementById('confetti');
+ const ctx = canvas.getContext('2d');
+
+ canvas.width = window.innerWidth;
+ canvas.height = window.innerHeight;
+
+ let pieces = Array.from({length:100},()=>({
   x:Math.random()*canvas.width,
   y:-Math.random()*canvas.height,
   s:Math.random()*5+3,
   v:Math.random()*3+2,
   a:Math.random()*6
  }));
- let frame=0;
+
+ let frame = 0;
+
  function draw(){
+
   ctx.clearRect(0,0,canvas.width,canvas.height);
+
   pieces.forEach(p=>{
-   p.y+=p.v;
-   p.x+=Math.sin(p.a+frame/20);
-   ctx.fillStyle=['#d6b46a','#f4e4c1','#a84b62'][Math.floor(p.s)%3];
+
+   p.y += p.v;
+   p.x += Math.sin(p.a+frame/20);
+
+   ctx.fillStyle = ['#d6b46a','#f4e4c1','#a84b62'][Math.floor(p.s)%3];
+
    ctx.fillRect(p.x,p.y,p.s,p.s);
+
   });
+
   frame++;
-  if(frame<180)requestAnimationFrame(draw);
-  else ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  if(frame<180){
+   requestAnimationFrame(draw);
+  }else{
+   ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+
  }
+
  draw();
+
 }
 
- 
-// MESSAGE CHARACTER COUNTER
-const messageInput = document.getElementById("messageInput");
-const counter = document.getElementById("counter");
 
-messageInput.addEventListener("input", function () {
-  counter.textContent = this.value.length + " / 2000";
+/* =================================
+   ALBUM PHOTO VIEWER
+================================= */
+
+function showPhoto(element){
+
+ const img = element.querySelector('img');
+ const caption = element.querySelector('.caption');
+
+ document.getElementById('bigPhoto').src = img.src;
+
+ document.getElementById('bigCaption').textContent = caption.textContent;
+
+ document.getElementById('viewer').classList.add('active');
+
+ document.body.style.overflow = 'hidden';
+
+}
+
+
+function closePhoto(event){
+
+ if(event.target.id === 'bigPhoto') return;
+
+ document.getElementById('viewer').classList.remove('active');
+
+ document.body.style.overflow = '';
+
+}
+
+
+/* KEYBOARD ESCAPE */
+
+document.addEventListener('keydown',function(event){
+
+ if(event.key === 'Escape'){
+
+  document.getElementById('viewer').classList.remove('active');
+
+  document.body.style.overflow = '';
+
+ }
+
 });
 
-// SEND MESSAGE TO DATABASE
-document.getElementById("messageForm").addEventListener(
-  "submit",
-  async function (e) {
-    e.preventDefault();
 
-    const button = document.getElementById("sendButton");
-    const status = document.getElementById("messageStatus");
-    const message = messageInput.value.trim();
+/* =================================
+   MESSAGE CHARACTER COUNTER
+================================= */
 
-    if (!message) {
-      status.textContent = "Tuliskan pesan terlebih dahulu ❤️";
-      return;
-    }
+const messageInput = document.getElementById('messageInput');
 
-    button.disabled = true;
-    button.textContent = "SENDING...";
-    status.textContent = "Sedang mengirim pesan...";
+const counter = document.getElementById('counter');
 
-    try {
-      const result = await fetch("/api/messages", {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          message: message
-        })
-      });
+messageInput.addEventListener('input',function(){
 
-      const data = await result.json();
+ counter.textContent = this.value.length + ' / 2000';
 
-      if (!result.ok || !data.success) {
-        throw new Error(data.error || "Gagal mengirim pesan.");
-      }
+});
 
-      status.textContent = "Pesan berhasil dikirim. Terima kasih ❤️";
-      messageInput.value = "";
-      counter.textContent = "0 / 2000";
 
-    } catch (error) {
-      status.textContent = error.message || "Koneksi bermasalah.";
-    } finally {
-      button.disabled = false;
-      button.textContent = "SEND WITH LOVE ♡";
-    }
+/* =================================
+   SEND MESSAGE TO DATABASE
+================================= */
+
+document.getElementById('messageForm').addEventListener(
+ 'submit',
+ async function(e){
+
+  e.preventDefault();
+
+  const button = document.getElementById('sendButton');
+
+  const status = document.getElementById('messageStatus');
+
+  const message = messageInput.value.trim();
+
+  if(!message){
+
+   status.textContent = 'Tuliskan pesan terlebih dahulu ❤️';
+
+   return;
+
   }
+
+  button.disabled = true;
+
+  button.textContent = 'SENDING...';
+
+  status.textContent = 'Sedang mengirim pesan...';
+
+  try{
+
+   const result = await fetch('/api/messages',{
+    method:'POST',
+    credentials:'same-origin',
+    headers:{
+     'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+     message:message
+    })
+   });
+
+   const data = await result.json();
+
+   if(!result.ok || !data.success){
+
+    throw new Error(data.error || 'Gagal mengirim pesan.');
+
+   }
+
+   status.textContent = 'Pesan berhasil dikirim. Terima kasih ❤️';
+
+   messageInput.value = '';
+
+   counter.textContent = '0 / 2000';
+
+  }catch(error){
+
+   status.textContent = error.message || 'Koneksi bermasalah.';
+
+  }finally{
+
+   button.disabled = false;
+
+   button.textContent = 'SEND WITH LOVE ♡';
+
+  }
+
+ }
+
 );
 
 </script>
+
 </body>
 </html>
