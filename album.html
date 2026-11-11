@@ -421,23 +421,18 @@ const musicButton = document.getElementById('music');
 
 let playing = false;
 
-window.addEventListener('load', function() {
+// Coba putar otomatis saat album dibuka
+window.addEventListener('load', () => {
+  if (sessionStorage.getItem('albumMusic') === 'on') {
+    sessionStorage.removeItem('albumMusic');
 
-  if (sessionStorage.getItem('playAlbumMusic') === 'yes') {
-
-    sessionStorage.removeItem('playAlbumMusic');
-
-    audio.play().then(() => {
-      playing = true;
-      musicButton.textContent = 'Ⅱ';
-    }).catch(error => {
-      console.log('Autoplay gagal:', error);
+    audio.play().catch(error => {
+      console.log('Autoplay diblokir:', error);
     });
-
   }
-
 });
 
+// Tombol play / pause
 function toggleMusic() {
   if (audio.paused) {
     audio.play();
@@ -455,8 +450,6 @@ audio.addEventListener('pause', () => {
   playing = false;
   musicButton.textContent = '♫';
 });
-// Tampilkan tombol musik
-musicButton.classList.remove('hidden');
 
 // PHOTO VIEWER
 function showPhoto(element) {
@@ -484,54 +477,7 @@ document.addEventListener('keydown', function(event) {
     document.body.style.overflow = '';
   }
 });
-
-const audio = document.getElementById('bgMusic');
-const musicButton = document.getElementById('music');
-
-let playing = false;
-
-// Coba autoplay saat halaman dibuka
-window.addEventListener('load', async () => {
-  try {
-    await audio.play();
-  } catch (error) {
-    console.log('Autoplay diblokir, menunggu interaksi.');
-  }
-});
-
-// Putar musik setelah interaksi pertama
-function startMusic() {
-  if (!playing) {
-    audio.play().catch(() => {});
-  }
-
-  document.removeEventListener('touchstart', startMusic);
-  document.removeEventListener('click', startMusic);
-}
-
-document.addEventListener('touchstart', startMusic);
-document.addEventListener('click', startMusic);
-
-// Tombol musik
-function toggleMusic() {
-  if (audio.paused) {
-    audio.play();
-  } else {
-    audio.pause();
-  }
-}
-
-audio.addEventListener('play', () => {
-  playing = true;
-  musicButton.textContent = 'Ⅱ';
-});
-
-audio.addEventListener('pause', () => {
-  playing = false;
-  musicButton.textContent = '♫';
-});
-
-
+ 
 </script>
 
 </body>
