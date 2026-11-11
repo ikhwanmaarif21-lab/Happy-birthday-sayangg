@@ -416,39 +416,22 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
 <canvas id="confetti"></canvas>
  
 <script>
- const audio = document.getElementById('bgMusic');
-const musicButton = document.getElementById('music');
+document.addEventListener('DOMContentLoaded', function() {
 
-let playing = false;
+  const audio = document.getElementById('bgMusic');
 
-// Coba putar otomatis saat album dibuka
-window.addEventListener('load', () => {
   if (sessionStorage.getItem('albumMusic') === 'on') {
-    sessionStorage.removeItem('albumMusic');
 
-    audio.play().catch(error => {
-      console.log('Autoplay diblokir:', error);
-    });
+    audio.play()
+      .then(() => {
+        sessionStorage.removeItem('albumMusic');
+      })
+      .catch(error => {
+        console.log('Musik belum bisa diputar:', error);
+      });
+
   }
-});
 
-// Tombol play / pause
-function toggleMusic() {
-  if (audio.paused) {
-    audio.play();
-  } else {
-    audio.pause();
-  }
-}
-
-audio.addEventListener('play', () => {
-  playing = true;
-  musicButton.textContent = 'Ⅱ';
-});
-
-audio.addEventListener('pause', () => {
-  playing = false;
-  musicButton.textContent = '♫';
 });
 
 // PHOTO VIEWER
