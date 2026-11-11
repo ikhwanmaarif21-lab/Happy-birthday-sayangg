@@ -450,6 +450,19 @@ document.addEventListener('keydown', function(event) {
 
  }
 
+ function toggleMusic(){
+ if(playing){
+  audio.pause();
+  playing=false;
+  document.getElementById('music').textContent='♫';
+ }else{
+  audio.play().then(()=>{
+   playing=true;
+   document.getElementById('music').textContent='Ⅱ';
+  }).catch(()=>{});
+ }
+}
+
 });
 
 </script>
