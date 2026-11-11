@@ -65,6 +65,13 @@ body {
   font-size: 47px;
   margin-bottom: 25px;
 }
+      #page3 {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 50px 25px;
+  text-align: center;
+  color: var(--cream);
+}
 
 /* CONTAINER UTAMA */
 .button-container {
@@ -184,9 +191,21 @@ body {
     Mas tahu ade sayang mas juga.
     Terima kasih sudah memilih mas. ❤️
   </p>
+  <button id="buttonB">SAYANG❤️</button>
 
 </div>
 
+    <div id="page3" style="display:none">
+
+  <h2>YEAYYY ❤️</h2>
+
+  <p>
+    Mas tahu ade sayang mas juga.
+    Terima kasih sudah memilih mas. ❤️
+    
+  </p>
+
+</div>
   
   <script>
   const buttonA = document.getElementById("buttonA");
@@ -212,6 +231,7 @@ buttonB.addEventListener("click", function() {
   document.getElementById("page1").style.display = "none";
 
   document.getElementById("page2").style.display = "block";
+  document.getElementById("page3").style.display = "block";
 
 });
   </script>
