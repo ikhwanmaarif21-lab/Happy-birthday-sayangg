@@ -416,6 +416,45 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
 <canvas id="confetti"></canvas>
 
 <script>
+ const audio = document.getElementById('bgMusic');
+const musicButton = document.getElementById('music');
+
+let playing = false;
+
+window.addEventListener('load', function() {
+
+  if (sessionStorage.getItem('playAlbumMusic') === 'yes') {
+
+    sessionStorage.removeItem('playAlbumMusic');
+
+    audio.play().then(() => {
+      playing = true;
+      musicButton.textContent = 'Ⅱ';
+    }).catch(error => {
+      console.log('Autoplay gagal:', error);
+    });
+
+  }
+
+});
+
+function toggleMusic() {
+  if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
+}
+
+audio.addEventListener('play', () => {
+  playing = true;
+  musicButton.textContent = 'Ⅱ';
+});
+
+audio.addEventListener('pause', () => {
+  playing = false;
+  musicButton.textContent = '♫';
+});
 // Tampilkan tombol musik
 musicButton.classList.remove('hidden');
 
