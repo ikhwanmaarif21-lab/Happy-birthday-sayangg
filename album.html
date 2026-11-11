@@ -408,11 +408,11 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
 
 </div>
 
- <audio id="bgMusic" loop>
- <source src="/music/musicalbum.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop preload="auto">
+  <source src="/music/musicalbum.mp3" type="audio/mpeg">
 </audio>
 
-<button id="music" class="hidden" onclick="toggleMusic()">♫</button>
+<button id="music" onclick="toggleMusic()">♫</button>
 <canvas id="confetti"></canvas>
 
 <script>
