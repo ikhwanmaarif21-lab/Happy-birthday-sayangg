@@ -416,62 +416,67 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
 <canvas id="confetti"></canvas>
 
 <script>
- const audio=document.getElementById('bgMusic');
-let playing=false;
+ 
+const audio = document.getElementById('bgMusic');
+const musicButton = document.getElementById('music');
 
- document.getElementById('music').classList.remove('hidden');
+let playing = false;
 
+// Tampilkan tombol musik
+musicButton.classList.remove('hidden');
+
+// PHOTO VIEWER
 function showPhoto(element) {
+  const img = element.querySelector('img');
+  const caption = element.querySelector('.caption');
 
- const img = element.querySelector('img');
- const caption = element.querySelector('.caption');
+  document.getElementById('bigPhoto').src = img.src;
+  document.getElementById('bigCaption').textContent = caption.textContent;
 
- document.getElementById('bigPhoto').src = img.src;
-
- document.getElementById('bigCaption').textContent =
- caption.textContent;
-
- document.getElementById('viewer').classList.add('active');
-
- document.body.style.overflow = 'hidden';
-
+  document.getElementById('viewer').classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
 
 function closePhoto(event) {
-
- if (
- event.target.id === 'bigPhoto'
- ) return;
-
- document.getElementById('viewer').classList.remove('active');
-
- document.body.style.overflow = '';
-
-}
-
-document.addEventListener('keydown', function(event) {
-
- if (event.key === 'Escape') {
+  if (event.target.id === 'bigPhoto') return;
 
   document.getElementById('viewer').classList.remove('active');
-
   document.body.style.overflow = '';
-
- }
-
- function toggleMusic(){
- if(playing){
-  audio.pause();
-  playing=false;
-  document.getElementById('music').textContent='♫';
- }else{
-  audio.play().then(()=>{
-   playing=true;
-   document.getElementById('music').textContent='Ⅱ';
-  }).catch(()=>{});
- }
 }
 
+// KEYBOARD ESCAPE
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    document.getElementById('viewer').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+
+// MUSIC FUNCTION
+function toggleMusic() {
+  if (playing) {
+    audio.pause();
+    playing = false;
+    musicButton.textContent = '♫';
+  } else {
+    audio.play().then(() => {
+      playing = true;
+      musicButton.textContent = 'Ⅱ';
+    }).catch(error => {
+      console.log('Music error:', error);
+    });
+  }
+}
+
+// Sinkronisasi jika audio dihentikan
+audio.addEventListener('pause', () => {
+  playing = false;
+  musicButton.textContent = '♫';
+});
+
+audio.addEventListener('play', () => {
+  playing = true;
+  musicButton.textContent = 'Ⅱ';
 });
 
 </script>
