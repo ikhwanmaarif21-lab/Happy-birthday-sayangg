@@ -416,12 +416,6 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
 <canvas id="confetti"></canvas>
 
 <script>
- 
-const audio = document.getElementById('bgMusic');
-const musicButton = document.getElementById('music');
-
-let playing = false;
-
 // Tampilkan tombol musik
 musicButton.classList.remove('hidden');
 
@@ -452,41 +446,50 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
+const audio = document.getElementById('bgMusic');
+const musicButton = document.getElementById('music');
 
-// MUSIC FUNCTION
-async function playMusic() {
+let playing = false;
+
+// Coba autoplay saat halaman dibuka
+window.addEventListener('load', async () => {
   try {
     await audio.play();
-    playing = true;
-    musicButton.textContent = 'Ⅱ';
   } catch (error) {
-    playing = false;
-    musicButton.textContent = '♫';
-    console.log('Autoplay diblokir browser:', error);
+    console.log('Autoplay diblokir, menunggu interaksi.');
   }
-}
-
-// Otomatis putar musik saat album dibuka
-window.addEventListener('load', () => {
-  playMusic();
 });
 
+// Putar musik setelah interaksi pertama
+function startMusic() {
+  if (!playing) {
+    audio.play().catch(() => {});
+  }
+
+  document.removeEventListener('touchstart', startMusic);
+  document.removeEventListener('click', startMusic);
+}
+
+document.addEventListener('touchstart', startMusic);
+document.addEventListener('click', startMusic);
+
+// Tombol musik
 function toggleMusic() {
-  if (playing) {
-    audio.pause();
+  if (audio.paused) {
+    audio.play();
   } else {
-    playMusic();
+    audio.pause();
   }
 }
-
-audio.addEventListener('pause', () => {
-  playing = false;
-  musicButton.textContent = '♫';
-});
 
 audio.addEventListener('play', () => {
   playing = true;
   musicButton.textContent = 'Ⅱ';
+});
+
+audio.addEventListener('pause', () => {
+  playing = false;
+  musicButton.textContent = '♫';
 });
 
 
