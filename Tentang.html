@@ -191,7 +191,7 @@ body {
     Mas tahu ade sayang mas juga.
     Terima kasih sudah memilih mas. ❤️
   </p>
-  <button id="buttonB">SAYANG❤️</button>
+  <button id="next">SAYANG❤️</button>
 
 </div>
 
@@ -231,6 +231,13 @@ buttonB.addEventListener("click", function() {
   document.getElementById("page1").style.display = "none";
 
   document.getElementById("page2").style.display = "block";
+
+});
+// Tombol next membuka surprise.html
+    next.addEventListener("click", function() {
+  document.getElementById("page1").style.display = "none";
+
+  document.getElementById("page2").style.display = "none";
   document.getElementById("page3").style.display = "block";
 
 });
