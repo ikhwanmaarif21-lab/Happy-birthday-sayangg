@@ -452,23 +452,33 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
+
 // MUSIC FUNCTION
-function toggleMusic() {
-  if (playing) {
-    audio.pause();
+async function playMusic() {
+  try {
+    await audio.play();
+    playing = true;
+    musicButton.textContent = 'Ⅱ';
+  } catch (error) {
     playing = false;
     musicButton.textContent = '♫';
-  } else {
-    audio.play().then(() => {
-      playing = true;
-      musicButton.textContent = 'Ⅱ';
-    }).catch(error => {
-      console.log('Music error:', error);
-    });
+    console.log('Autoplay diblokir browser:', error);
   }
 }
 
-// Sinkronisasi jika audio dihentikan
+// Otomatis putar musik saat album dibuka
+window.addEventListener('load', () => {
+  playMusic();
+});
+
+function toggleMusic() {
+  if (playing) {
+    audio.pause();
+  } else {
+    playMusic();
+  }
+}
+
 audio.addEventListener('pause', () => {
   playing = false;
   musicButton.textContent = '♫';
@@ -478,6 +488,7 @@ audio.addEventListener('play', () => {
   playing = true;
   musicButton.textContent = 'Ⅱ';
 });
+
 
 </script>
 
