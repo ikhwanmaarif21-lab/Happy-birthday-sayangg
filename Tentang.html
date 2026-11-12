@@ -250,9 +250,47 @@ button.tombol {
 </div>
   
   <script>
+    
   const buttonA = document.getElementById("buttonA");
 const buttonB = document.getElementById("buttonB");
 const buttonArea = document.querySelector(".button-area");
+    const musicButton = document.getElementById('musictentang');
+
+let currentPage = 'tentang';
+let playing = false;
+
+let tentangWasPlaying = false;
+let tentangSavedTime = 0;
+
+
+/* OPEN SURPRISE */
+
+function buttonB(){
+
+ document.getElementById('page1').style.display = 'none';
+
+ document.getElementById('page2').style.display = 'block';
+
+ document.getElementById('page2').classList.add('fade');
+
+ musicButton.classList.remove('hidden');
+
+ currentPage = 'tentang';
+
+ surpriseAudio.play()
+  .then(()=>{
+   playing = true;
+   updateMusicButton();
+  })
+  .catch(()=>{
+   playing = false;
+   updateMusicButton();
+  });
+
+ window.scrollTo(0,0);
+
+ confetti();
+}
 
 // Tombol A berpindah tempat
 buttonA.addEventListener("click", function() {
