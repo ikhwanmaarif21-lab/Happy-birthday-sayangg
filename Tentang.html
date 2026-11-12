@@ -204,8 +204,6 @@ button.tombol {
       <button id="buttonB">SAYANG❤️</button>
        <button id="buttonA">NGGA!!!</button>
     </div>
-     <audio id="buttonB" loop preload="auto">
- <source src="/music/musictentang.mp3" type="audio/mpeg"></audio>
   </div>
 
   <div id="page2" style="display:none">
@@ -255,42 +253,6 @@ button.tombol {
   const buttonA = document.getElementById("buttonA");
 const buttonB = document.getElementById("buttonB");
 const buttonArea = document.querySelector(".button-area");
-
-let currentPage = 'Tentang';
-let playing = false;
-
-let TentangWasPlaying = false;
-let TentangSavedTime = 0;
-
-
-/* OPEN SURPRISE */
-
-function buttonB(){
-
- document.getElementById('page1').style.display = 'none';
-
- document.getElementById('page2').style.display = 'block';
-
- document.getElementById('page2').classList.add('fade');
-
- musicButton.classList.remove('hidden');
-
- currentPage = 'tentang';
-
- buttonB.play()
-  .then(()=>{
-   playing = true;
-   updateMusicButton();
-  })
-  .catch(()=>{
-   playing = false;
-   updateMusicButton();
-  });
-
- window.scrollTo(0,0);
-
- confetti();
-}
 
 // Tombol A berpindah tempat
 buttonA.addEventListener("click", function() {
