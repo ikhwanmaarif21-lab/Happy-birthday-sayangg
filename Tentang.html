@@ -195,6 +195,9 @@ button.tombol {
 <div class="decor one">♡</div>
 <div class="decor two">✧</div>
 <div class="decor three">♡</div>
+  <audio id="bgMusic" loop>
+  <source src="/music/musictentang.mp3" type="audio/mpeg">
+</audio>
   
   <div id="page1" class="button-container">
     <h2>Mas kan sayang ade<br>
@@ -253,6 +256,26 @@ button.tombol {
   const buttonA = document.getElementById("buttonA");
 const buttonB = document.getElementById("buttonB");
 const buttonArea = document.querySelector(".button-area");
+    const audio = document.getElementById("bgMusic");
+
+    buttonB.addEventListener("click", function() {
+
+  document.getElementById("page1").style.display = "none";
+  document.getElementById("page2").style.display = "block";
+
+  audio.play().catch(error => {
+    console.log(error);
+  });
+
+});
+    const next = document.getElementById("next");
+
+next.addEventListener("click", function() {
+
+  document.getElementById("page2").style.display = "none";
+  document.getElementById("page3").style.display = "block";
+
+});
 
 // Tombol A berpindah tempat
 buttonA.addEventListener("click", function() {
