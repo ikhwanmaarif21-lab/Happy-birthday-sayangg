@@ -202,8 +202,10 @@ button.tombol {
 
     <div class="button-area">
       <button id="buttonB">SAYANG❤️</button>
-      <button id="buttonA">NGGA!!!</button>
+       <button id="buttonA">NGGA!!!</button>
     </div>
+     <audio id="buttonB" loop preload="auto">
+ <source src="/music/musictentang.mp3" type="audio/mpeg"></audio>
   </div>
 
   <div id="page2" style="display:none">
@@ -234,7 +236,6 @@ button.tombol {
 >
   SAYANG❤️
 </button>
-
 </div>
 
     <div id="page3" style="display:none">
@@ -254,13 +255,12 @@ button.tombol {
   const buttonA = document.getElementById("buttonA");
 const buttonB = document.getElementById("buttonB");
 const buttonArea = document.querySelector(".button-area");
-    const musicButton = document.getElementById('musictentang');
 
-let currentPage = 'tentang';
+let currentPage = 'Tentang';
 let playing = false;
 
-let tentangWasPlaying = false;
-let tentangSavedTime = 0;
+let TentangWasPlaying = false;
+let TentangSavedTime = 0;
 
 
 /* OPEN SURPRISE */
@@ -277,7 +277,7 @@ function buttonB(){
 
  currentPage = 'tentang';
 
- surpriseAudio.play()
+ buttonB.play()
   .then(()=>{
    playing = true;
    updateMusicButton();
