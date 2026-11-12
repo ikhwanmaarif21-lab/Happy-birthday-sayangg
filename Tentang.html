@@ -163,29 +163,35 @@ body {
     padding: 15px 20px;
   }
 }
-/* TOMBOL HALAMAN KEDUA */
-button.tombol {
-  display: inline-flex !important;
-  justify-content: center;
-  align-items: center;
+    /* BACK BUTTON */
 
-  width: 105px !important;
-  height: 42px !important;
-  padding: 0 15px !important;
-
-  background: #d6b46a !important;
-  color: #300914 !important;
-
-  border: 1px solid #d6b46a !important;
-  border-radius: 50px !important;
-
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 500;
-
-  cursor: pointer;
-  margin-top: 20px;
+.back-button {
+  display: inline-block;
+  margin: 30px auto;
+  padding: 14px 30px;
+  border: 1px solid var(--gold);
+  outline: 1px solid #d6b46a44;
+  outline-offset: 4px;
+  background: linear-gradient(145deg, #32101b, #300914);
+  color: var(--gold);
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-align: center;
+  box-shadow: 0 8px 25px #0005;
+  transition: all .3s ease;
 }
+
+.back-button:hover {
+  background: var(--gold);
+  color: #300914;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px #0006;
+ text-align:center;
+ position:relative;
+}
+
 
   </style>
 </head>
