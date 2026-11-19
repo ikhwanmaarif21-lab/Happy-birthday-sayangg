@@ -320,78 +320,72 @@ body {
   
   <script>
     
-  const buttonA = document.getElementById("buttonA");
+const buttonA = document.getElementById("buttonA");
 const buttonB = document.getElementById("buttonB");
 const buttonArea = document.querySelector(".button-area");
-    const audio = document.getElementById("bgMusic");
+const audio = document.getElementById("bgMusic");
 
-    buttonB.addEventListener("click", function() {
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+const page3 = document.getElementById("page3");
+const next = document.getElementById("next");
 
-  document.getElementById("page1").style.display = "none";
-  document.getElementById("page2").style.display = "block";
+// TOMBOL NGGA
+buttonB.addEventListener("click", function() {
+  page1.style.display = "none";
+  page2.style.display = "block";
 
-  audio.play().catch(error => {
-    console.log(error);
-  });
-
-});
-    const next = document.getElementById("next");
-
-next.addEventListener("click", function() {
-
-  document.getElementById("page2").style.display = "none";
-  document.getElementById("page3").style.display = "block";
-
+  audio.play().catch(error => console.log(error));
 });
 
-// Tombol A berpindah tempat
+// TOMBOL SAYANG BERPINDAH
 buttonA.addEventListener("click", function() {
-
   const maxX = buttonArea.clientWidth - buttonA.offsetWidth;
   const maxY = buttonArea.clientHeight - buttonA.offsetHeight;
 
-  const randomX = Math.random() * maxX;
-  const randomY = Math.random() * maxY;
-
-  buttonA.style.left = randomX + "px";
-  buttonA.style.top = randomY + "px";
-
+  buttonA.style.left = Math.random() * maxX + "px";
+  buttonA.style.top = Math.random() * maxY + "px";
 });
 
-// Tombol B membuka surprise.html
-buttonB.addEventListener("click", function() {
-  document.getElementById("page1").style.display = "none";
+// TOMBOL NEXT
+next.addEventListener("click", function() {
+  page2.style.display = "none";
+  page3.style.display = "block";
 
-  document.getElementById("page2").style.display = "block";
-
-});
-// Tombol next membuka surprise.html
-    next.addEventListener("click", function() {
-  document.getElementById("page1").style.display = "none";
-
-  document.getElementById("page2").style.display = "none";
-  document.getElementById("page3").style.display = "block";
-  starhearts();
-
+  startHearts();
 });
 
-    // FALLING HEARTS KHUSUS PAGE 3
 
-const heartCanvas = document.createElement("canvas");
-heartCanvas.id = "heartCanvas";
-document.body.appendChild(heartCanvas);
+// =================================
+// HUJAN HATI KHUSUS PAGE 3
+// =================================
 
-const ctx = heartCanvas.getContext("2d");
+const canvas = document.createElement("canvas");
+
+canvas.style.cssText = `
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  display: none;
+`;
+
+document.body.appendChild(canvas);
+
+const ctx = canvas.getContext("2d");
 
 let hearts = [];
-let heartAnimation = null;
-let heartRunning = false;
+let running = false;
+let animationFrame;
 
 function resizeCanvas() {
   const dpr = window.devicePixelRatio || 1;
 
-  heartCanvas.width = window.innerWidth * dpr;
-  heartCanvas.height = window.innerHeight * dpr;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
 
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
@@ -401,13 +395,13 @@ window.addEventListener("resize", resizeCanvas);
 
 function createHeart() {
   return {
-    x: Math.random() * innerWidth,
+    x: Math.random() * window.innerWidth,
     y: -20,
-    size: Math.random() * 8 + 5,
-    speed: Math.random() * 1.2 + 0.5,
-    drift: Math.random() * 0.8 - 0.4,
+    size: Math.random() * 9 + 7,
+    speed: Math.random() * 1.5 + 1,
+    drift: Math.random() * 1 - 0.5,
     rotation: Math.random() * 6,
-    opacity: Math.random() * 0.35 + 0.3,
+    opacity: Math.random() * 0.4 + 0.4,
     color: ["#ff8fab", "#ffc0cb", "#d6b46a", "#ff5c8a"][
       Math.floor(Math.random() * 4)
     ]
@@ -416,6 +410,7 @@ function createHeart() {
 
 function drawHeart(h) {
   ctx.save();
+
   ctx.translate(h.x, h.y);
   ctx.rotate(h.rotation);
   ctx.scale(h.size / 20, h.size / 20);
@@ -433,46 +428,39 @@ function drawHeart(h) {
 }
 
 function animateHearts() {
-  if (!heartRunning) return;
+  if (!running) return;
 
-  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-  if (hearts.length < 28 && Math.random() < 0.12) {
+  // Membuat hati baru
+  if (hearts.length < 45 && Math.random() < 0.2) {
     hearts.push(createHeart());
   }
 
   hearts.forEach((h, i) => {
     h.y += h.speed;
     h.x += h.drift;
-    h.rotation += 0.01;
+    h.rotation += 0.015;
 
     drawHeart(h);
 
-    if (h.y > innerHeight + 30) {
+    if (h.y > window.innerHeight + 30) {
       hearts.splice(i, 1);
     }
   });
 
-  heartAnimation = requestAnimationFrame(animateHearts);
+  animationFrame = requestAnimationFrame(animateHearts);
 }
 
 function startHearts() {
-  if (heartRunning) return;
+  if (running) return;
 
-  heartRunning = true;
-  heartCanvas.style.display = "block";
+  running = true;
+  canvas.style.display = "block";
+
   animateHearts();
 }
 
-function stopHearts() {
-  heartRunning = false;
-  cancelAnimationFrame(heartAnimation);
-
-  hearts = [];
-
-  ctx.clearRect(0, 0, innerWidth, innerHeight);
-  heartCanvas.style.display = "none";
-}
   </script>
 
 </body>
