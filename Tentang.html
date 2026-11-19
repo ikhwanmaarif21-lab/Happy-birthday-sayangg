@@ -4,6 +4,17 @@
   <title>My Love ❤️</title>
 
   <style>
+    /* FALLING HEARTS PAGE 3 */
+
+#heartCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  display: none;
+}
    
 * {
   margin: 0;
@@ -360,8 +371,108 @@ buttonB.addEventListener("click", function() {
 
   document.getElementById("page2").style.display = "none";
   document.getElementById("page3").style.display = "block";
+  starhearts();
 
 });
+
+    // FALLING HEARTS KHUSUS PAGE 3
+
+const heartCanvas = document.createElement("canvas");
+heartCanvas.id = "heartCanvas";
+document.body.appendChild(heartCanvas);
+
+const ctx = heartCanvas.getContext("2d");
+
+let hearts = [];
+let heartAnimation = null;
+let heartRunning = false;
+
+function resizeCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+
+  heartCanvas.width = window.innerWidth * dpr;
+  heartCanvas.height = window.innerHeight * dpr;
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+function createHeart() {
+  return {
+    x: Math.random() * innerWidth,
+    y: -20,
+    size: Math.random() * 8 + 5,
+    speed: Math.random() * 1.2 + 0.5,
+    drift: Math.random() * 0.8 - 0.4,
+    rotation: Math.random() * 6,
+    opacity: Math.random() * 0.35 + 0.3,
+    color: ["#ff8fab", "#ffc0cb", "#d6b46a", "#ff5c8a"][
+      Math.floor(Math.random() * 4)
+    ]
+  };
+}
+
+function drawHeart(h) {
+  ctx.save();
+  ctx.translate(h.x, h.y);
+  ctx.rotate(h.rotation);
+  ctx.scale(h.size / 20, h.size / 20);
+
+  ctx.beginPath();
+  ctx.moveTo(0, 7);
+  ctx.bezierCurveTo(-20, -5, -10, -15, 0, -7);
+  ctx.bezierCurveTo(10, -15, 20, -5, 0, 7);
+
+  ctx.fillStyle = h.color;
+  ctx.globalAlpha = h.opacity;
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function animateHearts() {
+  if (!heartRunning) return;
+
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+  if (hearts.length < 28 && Math.random() < 0.12) {
+    hearts.push(createHeart());
+  }
+
+  hearts.forEach((h, i) => {
+    h.y += h.speed;
+    h.x += h.drift;
+    h.rotation += 0.01;
+
+    drawHeart(h);
+
+    if (h.y > innerHeight + 30) {
+      hearts.splice(i, 1);
+    }
+  });
+
+  heartAnimation = requestAnimationFrame(animateHearts);
+}
+
+function startHearts() {
+  if (heartRunning) return;
+
+  heartRunning = true;
+  heartCanvas.style.display = "block";
+  animateHearts();
+}
+
+function stopHearts() {
+  heartRunning = false;
+  cancelAnimationFrame(heartAnimation);
+
+  hearts = [];
+
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  heartCanvas.style.display = "none";
+}
   </script>
 
 </body>
